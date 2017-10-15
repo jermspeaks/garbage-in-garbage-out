@@ -57,6 +57,7 @@ createStates();
 
 d3.queue()
   .defer(d3.csv, "data/labels.csv", typeLocation)
+  .defer(d3.csv, "data/trash.csv")
   .await(filterData);
 
 /*
@@ -70,9 +71,54 @@ function typeLocation(d) {
   return d;
 }
 
-function filterData(error, locations) {
-  var byName = d3.map(locations, function(d) { return d.name; });
-  console.log("Loaded " + byName.size() + " locations.");
+function filterData(error, locations, trash) {  
+  var nodes = [];
+  var links = [];
+  trash.forEach(t => {
+    // --- Add paths
+    // Format of object is an array of objects, each containing
+    //  a type (LineString - the path will automatically draw a greatArc)
+    //  and coordinates 
+    var linked = {
+        type: "LineString",
+        coordinates: []   
+    };
+
+    var foundSource = nodes.find(n => n.name && (n.name === t.source));
+    var foundDest = nodes.find(n => n.name && (n.name === t.dest));
+    
+    if (!foundSource) {
+      var city = locations.find(l => l.name === t.source);
+      var coords = projection([city.longitude, city.latitude]);
+      city.x = coords[0];
+      city.y = coords[1];
+
+      nodes.push(city);
+      // linked.source = { x: city.x, y: city.y};
+      linked.coordinates.push([city.longitude, city.latitude]);
+    } else {
+      // linked.source = { x: foundSource.x, y: foundSource.y};
+      linked.coordinates.push([foundSource.longitude, foundSource.latitude]);
+    }
+
+    if (!foundDest) {
+      var city = locations.find(l => l.name === t.dest);
+      var coords = projection([city.longitude, city.latitude]);
+      city.x = coords[0];
+      city.y = coords[1];
+
+      nodes.push(city);
+      // linked.target = { x: city.x, y: city.y}; 
+      linked.coordinates.push([city.longitude, city.latitude]);
+    } else {
+      linked.coordinates.push([foundDest.longitude, foundDest.latitude]);
+      // linked.target = { x: foundDest.x, y: foundDest.y}
+    }
+
+    links.push(linked);
+  });
+  // var byName = d3.map(locations, function(d) { return d.name; });
+  // console.log("Loaded " + byName.size() + " locations.");
 
   // // function to sort airports by degree
   // var bydegree = function(a, b) {
@@ -82,7 +128,7 @@ function filterData(error, locations) {
   // // sort remaining airports by degree
   // locations.sort(bydegree);
 
-  locations = locations.slice(0, 20);
+  // locations = locations.slice(0, 20);
 
   // calculate projected x, y pixel locations
   // locations = locations.map(d => {
@@ -91,38 +137,22 @@ function filterData(error, locations) {
   //   d.y = coords[1];
   //   return d;
   // })
-  locations.forEach(function(d) {
-    var coords = projection([d.longitude, d.latitude]);
-    d.x = coords[0];
-    d.y = coords[1];
-  });
+  // nodes.forEach(function(d) {
+  //   var coords = projection([d.longitude, d.latitude]);
+  //   d.x = coords[0];
+  //   d.y = coords[1];
+  // });
 
-  console.log('locations', locations);
+  console.log('locations', nodes, links);
 
-  drawData(locations);
+  drawData(nodes, links);
 }
 
-function drawData(locations) {
-  // var line = d3.line()
-  //   .curve(d3.curveBundle)
-  //   .x(function(d) { return d.x; })
-  //   .y(function(d) { return d.y; });
-
-  // var elemEnter = elem.enter()
-  //     .append("g")
-  //     .attr("transform", function(d){return "translate("+d.x+",80)"})
- 
-  //   /*Create the circle for each block */
-  //   var circle = elemEnter.append("circle")
-  //     .attr("r", function(d){return d.r} )
-  //     .attr("stroke","black")
-  //     .attr("fill", "white")
- 
-  //   /* Create the text for each block */
-  //   elemEnter.append("text")
-  //     .attr("dx", function(d){return -20})
-  //     .text(function(d){return d.label})
-
+function drawData(locations, links) {
+  var line = d3.line()
+    .curve(d3.curveBundle)
+    .x(d => d.x)
+    .y(d => d.y);
 
   var locationGroup = plot.append("g").attr("id", "locations")
     .selectAll("circle.locations")
@@ -144,6 +174,64 @@ function drawData(locations) {
     .attr("y", d => d.y)
     .attr("dy", ".35em")
     .text(function(d) { return d.name; });
+
+  // function link(d) {
+  //   return "M" + d.source.y + "," + d.source.x
+  //       + "C" + (d.source.y + d.target.y) / 2 + "," + d.source.x
+  //       + " " + (d.source.y + d.target.y) / 2 + "," + d.target.x
+  //       + " " + d.target.y + "," + d.target.x;
+  // }
+  // Standard enter / update 
+  var path = d3.geoPath()
+    .projection(projection);
+
+  var arcGroup = plot.append("g").attr("id", "arcs");
+
+  var pathArcs = arcGroup.selectAll(".arc")
+      .data(links);
+
+  //enter
+  pathArcs.enter()
+      .append("path")
+      .attr('class', 'arc')
+      .style('fill', 'none');
+
+  //update
+  pathArcs.attr('d', path)
+    .style('stroke', '#0000ff')
+    .style('stroke-width', '2px');
+      // Uncomment this line to remove the transition
+      // .call(lineTransition); 
+
+  //exit
+  pathArcs.exit().remove();
+  // var link = d3.linkHorizontal()
+  //   .x(function(d) { return d.y; })
+  //   .y(function(d) { return d.x; });
+
+  // var custPath = d3.path();
+  // path.moveTo(1, 2);
+  // path.lineTo(3, 4);
+  // path.closePath();
+  // // 
+  // // var diagonal = d3.svg.diagonal()
+  // //   .source(function (d) { return { x: d[0].y, y: d[0].x }; })            
+  // //   .target(function (d) { return { x: d[1].y, y: d[1].x }; })
+  // //   .projection(function (d) { return [d.y, d.x]; });
+     
+  // var linkGroup = plot.append("g").attr("id", "links")
+  //   .selectAll("circle.links")
+  //   .data(links)
+  //   .enter();
+
+  // linkGroup.append("path")
+  //   .attr('class', 'link')
+  //   .attr("d", link)    
+  //   .style("fill", "white")
+  //   // .text(d => d.name)
+  //   .attr('stroke', '#444')
+  //   .attr('stroke-width', 2)
+  //   .attr('fill', 'none');
 
   // plot.selectAll(".location-text")
   //   .data(locations)
