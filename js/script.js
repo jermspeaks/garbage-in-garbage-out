@@ -118,6 +118,7 @@ function update(chosenLocation) {
   .defer(d3.csv, "data/labels.csv", typeLocation)
   // .defer(d3.csv, "data/trash.csv")
   .defer(d3.json, "data/waste-cleaned.json")
+  .defer(d3.json, "data/waste-cleaned.json")
   .await(filterData);
 
   /*
@@ -149,13 +150,36 @@ function update(chosenLocation) {
     }
 
     return final;
+  }  
+
+  function filterRTrash(source, trashData) {
+    // const source = "AlbanyNY";
+    var city = trashData.filter(d => d.Name === source);
+    var foundCity = city[0];
+    var final = [];
+    for (var k in foundCity) {
+      if (foundCity.hasOwnProperty(k) && k !== 'Name') {
+        var nextDest = {
+          source: k,
+          dest: source,
+          weight: foundCity[k]
+        }
+        
+        final.push(nextDest);
+      }
+    }
+
+    return final;
   }
 
-  function filterData(error, locations, trashData) {  
+  function filterData(error, locations, trashData, receivedTrashData) {  
     var trash = filterTrash(chosenLocation, trashData);
-    console.log('trash', trash);
+    // var rTrash = filterTrash(chosenLocation, filterRTrash);
+    console.log('sent trash', trash);
+    // console.log('received trash', rTrash);
     var nodes = [];
     var links = [];
+
     trash.forEach(t => {
       // --- Add paths
       // Format of object is an array of objects, each containing
