@@ -18,5 +18,8 @@
   "homepage": "https://github.com/jermspeaks/garbage-in-garbage-out#readme",
   "devDependencies": {
     "request": "^2.83.0"
+  },
+  "dependencies": {
+    "d3": "^4.11.0"
   }
 }
