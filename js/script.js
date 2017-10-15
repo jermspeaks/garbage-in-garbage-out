@@ -1,5 +1,6 @@
 const MAP_COLOR = '#ddd';
 const FILL_COLOR = '#5c6066';
+const STATE_BORDER_COLOR = '#fff';
 
 var width = 960,
     height = 600;
@@ -73,11 +74,12 @@ function createStates() {
       .data(topojson.feature(us, us.objects.states).features)
       .enter().append("path")
       .attr("d", path)
-      .attr("fill", MAP_COLOR);
+      .attr("fill", MAP_COLOR)
+      .attr('stroke', STATE_BORDER_COLOR);
 
     // svg.append("path")
     //     .attr("class", "states")
-    //     .datum(topojson.feature(us, us.objects.states))
+    //     .datum(topojson.feature(us, us.objects.states).features)
     //     .attr("d", path);
   });   
 
