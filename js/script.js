@@ -86,7 +86,8 @@ createStates();
 
 d3.queue()
   .defer(d3.csv, "data/labels.csv", typeLocation)
-  .defer(d3.csv, "data/trash.csv")
+  // .defer(d3.csv, "data/trash.csv")
+  .defer(d3.json, "data/waste-cleaned.json")
   .await(filterData);
 
 /*
@@ -100,7 +101,29 @@ function typeLocation(d) {
   return d;
 }
 
-function filterData(error, locations, trash) {  
+function filterTrash(source, trashData) {
+  // const source = "AlbanyNY";
+  var city = trashData.filter(d => d.Name === source);
+  var foundCity = city[0];
+  var final = [];
+  for (var k in foundCity) {
+    if (foundCity.hasOwnProperty(k) && k !== 'Name') {
+      var nextDest = {
+        source: source,
+        dest: k,
+        weight: foundCity[k]
+      }
+      
+      final.push(nextDest);
+    }
+  }
+
+  return final;
+}
+
+function filterData(error, locations, trashData) {  
+  var trash = filterTrash('SanJoseCA', trashData);
+  console.log('trash', trash);
   var nodes = [];
   var links = [];
   trash.forEach(t => {
@@ -244,7 +267,7 @@ function drawData(locations, links) {
   
   var lineWidthRange = d3.scaleLinear()
     .domain([0, maxDomain])
-    .range([0, 5]);
+    .range([1, 8]);
 
 
   // var lineGroup = plot.append("g").attr("id", "links")
@@ -294,40 +317,4 @@ var lineGraph = svg.append("g").attr("class", "test")
   .attr("stroke", FILL_COLOR)
   .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
   .attr("fill", "none");
-   
-  // var link = d3.linkHorizontal()
-  //   .x(function(d) { return d.y; })
-  //   .y(function(d) { return d.x; });
-
-  // var custPath = d3.path();
-  // path.moveTo(1, 2);
-  // path.lineTo(3, 4);
-  // path.closePath();
-  // // 
-  // // var diagonal = d3.svg.diagonal()
-  // //   .source(function (d) { return { x: d[0].y, y: d[0].x }; })            
-  // //   .target(function (d) { return { x: d[1].y, y: d[1].x }; })
-  // //   .projection(function (d) { return [d.y, d.x]; });
-     
-  // var linkGroup = plot.append("g").attr("id", "links")
-  //   .selectAll("circle.links")
-  //   .data(links)
-  //   .enter();
-
-  // linkGroup.append("path")
-  //   .attr('class', 'link')
-  //   .attr("d", link)    
-  //   .style("fill", "white")
-  //   // .text(d => d.name)
-  //   .attr('stroke', '#444')
-  //   .attr('stroke-width', 2)
-  //   .attr('fill', 'none');
-
-  // plot.selectAll(".location-text")
-  //   .data(locations)
-  //   .enter().append("text")
-  //   .attr("class", function(d) { return "subunit-label " + d.id; })
-  //   .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
-  //   .attr("dy", ".35em")
-  //   .text(function(d) { return d.properties.name; });
 }
