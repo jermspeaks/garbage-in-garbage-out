@@ -1,3 +1,6 @@
+const MAP_COLOR = '#ddd';
+const FILL_COLOR = '#5c6066';
+
 var width = 960,
     height = 600;
 
@@ -29,7 +32,7 @@ function createStates() {
       .data(topojson.feature(us, us.objects.states).features)
       .enter().append("path")
       .attr("d", path)
-      .attr("fill", "#ccc");
+      .attr("fill", MAP_COLOR);
 
     // svg.append("path")
     //     .attr("class", "states")
@@ -92,13 +95,15 @@ function filterData(error, locations, trash) {
       var coords = projection([city.longitude, city.latitude]);
       city.x = coords[0];
       city.y = coords[1];
+      city.weight = t.weight;
 
       nodes.push(city);
-      // linked.source = { x: city.x, y: city.y};
-      linked.coordinates.push([city.longitude, city.latitude]);
+      linked.source = city;
+      // linked.coordinates.push([city.longitude, city.latitude]);
     } else {
-      // linked.source = { x: foundSource.x, y: foundSource.y};
-      linked.coordinates.push([foundSource.longitude, foundSource.latitude]);
+      foundSource.weight = t.weight;
+      linked.source = foundSource;
+      // linked.coordinates.push([foundSource.longitude, foundSource.latitude]);
     }
 
     if (!foundDest) {
@@ -106,13 +111,15 @@ function filterData(error, locations, trash) {
       var coords = projection([city.longitude, city.latitude]);
       city.x = coords[0];
       city.y = coords[1];
+      city.weight = t.weight;
 
       nodes.push(city);
-      // linked.target = { x: city.x, y: city.y}; 
-      linked.coordinates.push([city.longitude, city.latitude]);
+      linked.target = city; 
+      // linked.coordinates.push([city.longitude, city.latitude]);
     } else {
-      linked.coordinates.push([foundDest.longitude, foundDest.latitude]);
-      // linked.target = { x: foundDest.x, y: foundDest.y}
+      // linked.coordinates.push([foundDest.longitude, foundDest.latitude]);
+      foundDest.weight = t.weight;
+      linked.target = foundDest
     }
 
     links.push(linked);
@@ -160,10 +167,10 @@ function drawData(locations, links) {
     .enter();
 
   locationGroup.append("circle")
-    .attr("r", 10)
+    .attr("r", 5)
     .attr("cx", d => d.x)
     .attr("cy", d => d.y)
-    .style("fill", "white")
+    .style("fill", FILL_COLOR)
     .text(d => d.name)
     // .style("opacity", 0.6)
     .style("stroke", "#252525");
@@ -172,8 +179,9 @@ function drawData(locations, links) {
     .attr("class", "location-text")
     .attr("x", d => d.x)
     .attr("y", d => d.y)
-    .attr("dy", ".35em")
-    .text(function(d) { return d.name; });
+    .attr("dx", ".5em")
+    .attr("dy", "1em")
+    .text(d => d.name.slice(0, d.name.length - 2));
 
   // function link(d) {
   //   return "M" + d.source.y + "," + d.source.x
@@ -182,29 +190,51 @@ function drawData(locations, links) {
   //       + " " + d.target.y + "," + d.target.x;
   // }
   // Standard enter / update 
-  var path = d3.geoPath()
-    .projection(projection);
+  // var path = d3.geoPath()
+  //   .projection(projection);
 
-  var arcGroup = plot.append("g").attr("id", "arcs");
+  // var arcGroup = plot.append("g").attr("id", "arcs");
 
-  var pathArcs = arcGroup.selectAll(".arc")
-      .data(links);
+  // var pathArcs = arcGroup.selectAll(".arc")
+  //     .data(links);
 
-  //enter
-  pathArcs.enter()
-      .append("path")
-      .attr('class', 'arc')
-      .style('fill', 'none');
+  // //enter
+  // pathArcs.enter()
+  //     .append("path")
+  //     .attr('class', 'arc')
+  //     .style('fill', 'none');
 
-  //update
-  pathArcs.attr('d', path)
-    .style('stroke', '#0000ff')
-    .style('stroke-width', '2px');
-      // Uncomment this line to remove the transition
-      // .call(lineTransition); 
+  // //update
+  // pathArcs.attr('d', path)
+  //   .style('stroke', '#0000ff')
+  //   .style('stroke-width', '2px');
+  //     // Uncomment this line to remove the transition
+  //     // .call(lineTransition); 
 
-  //exit
-  pathArcs.exit().remove();
+  // //exit
+  // pathArcs.exit().remove();
+  
+  var maxDomain = d3.max(links, l => +l.target.weight);
+  
+  var lineWidthRange = d3.scaleLinear()
+    .domain([0, maxDomain])
+    .range([0, 5]);
+
+
+  var lineGroup = plot.append("g").attr("id", "links")
+    .selectAll("line.link")
+    .data(links)  
+    .enter();
+
+  lineGroup.append("line")
+      // .attr("r", d => d.weight)
+      .attr("stroke", FILL_COLOR)
+      .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
+      .attr("x1", function (d){ return d.source.x; })
+      .attr("y1", function (d){ return d.source.y; })
+      .attr("x2", function (d){ return d.target.x; })
+      .attr("y2", function (d){ return d.target.y; });
+   
   // var link = d3.linkHorizontal()
   //   .x(function(d) { return d.y; })
   //   .y(function(d) { return d.x; });

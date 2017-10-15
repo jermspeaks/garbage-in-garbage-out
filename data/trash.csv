@@ -1,2 +1,5 @@
 source,dest,weight
 AlbanyNY,HoustonTX,25
+AlbanyNY,NewYorkNY,4
+AlbanyNY,PittsburghPA,3
+AlbanyNY,RochesterNY,23
