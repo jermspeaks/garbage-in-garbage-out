@@ -1,6 +1,9 @@
 const MAP_COLOR = '#ddd';
-const FILL_COLOR = '#5c6066';
 const STATE_BORDER_COLOR = '#fff';
+const SENDING_COLOR = 'rgb(28,145,236)';
+const RECEIVING_COLOR = 'rgb(236,28,36)';
+// const FILL_COLOR = '#5c6066';
+const FILL_COLOR = SENDING_COLOR;
 
 var width = 960,
     height = 600;
