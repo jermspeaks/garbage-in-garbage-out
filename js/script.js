@@ -237,11 +237,12 @@ function update(chosenLocation) {
       .x(d => d.x)
       .y(d => d.y);
 
-    var locationCircles = locationGroup.selectAll("circle.locations")
+    var locationCircles = locationGroup.selectAll("circle")
       .data(locations, d => d)
 
     locationCircles.enter()
       .append("circle")
+      .attr('class', 'location')
       .attr("r", 5)
       .attr("cx", d => d.x)
       .attr("cy", d => d.y)
@@ -260,7 +261,13 @@ function update(chosenLocation) {
       .attr("y", d => d.y)
       .attr("dx", ".5em")
       .attr("dy", "1em")
-      .text(d => d.name.slice(0, d.name.length - 2))
+      .text(d => {
+        if (d.name.indexOf('other') >= 0) {
+          return d.name.replace(/^other/, '');
+        } else {
+          return d.name.slice(0, d.name.length - 2)
+        }
+      })
       .merge(locationText);
 
     locationCircles.exit().remove();
@@ -270,7 +277,7 @@ function update(chosenLocation) {
     
     var lineWidthRange = d3.scaleLinear()
       .domain([0, maxDomain])
-      .range([1, 8]);
+      .range([1, 6]);
 
     //This is the accessor function we talked about above
     var lineFunction = d3.line()
