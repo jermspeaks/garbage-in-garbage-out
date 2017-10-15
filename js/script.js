@@ -15,6 +15,21 @@ var svg = d3.select("body").append("svg")
 var states = svg.append("g").attr("class", "states");
 var plot = svg.append("g").attr("class", "plot").attr("id", "plot");
 
+
+var markerArrow = svg.append('svg:defs')
+    .append('svg:marker')
+    .attr('id', 'marker_arrow')
+    .attr('markerHeight', 5)
+    .attr('markerWidth', 5)
+    .attr('markerUnits', 'strokeWidth')
+    .attr('orient', 'auto')
+    .attr('refX', 0)
+    .attr('refY', 0)
+    .attr('viewBox', '-5 -5 10 10')
+    .append('svg:path')
+      .attr('d', 'M 0,0 m -5,-5 L 5,0 L -5,5 Z')
+      .attr('fill', FILL_COLOR);
+
 function lineTransition(path) {
   path.transition()
       //NOTE: Change this number (in ms) to make lines draw faster or slower
@@ -84,237 +99,249 @@ function createStates() {
 
 createStates();
 
-d3.queue()
+var selector = document.getElementById('select-location');
+
+selector.onchange = evt => {
+  var chosenLocation = evt.target.value;
+
+  update(chosenLocation);
+}
+
+function update(chosenLocation) {
+  d3.queue()
   .defer(d3.csv, "data/labels.csv", typeLocation)
   // .defer(d3.csv, "data/trash.csv")
   .defer(d3.json, "data/waste-cleaned.json")
   .await(filterData);
 
-/*
- * see airports.csv
- * convert gps coordinates to number and init degree
- */
-function typeLocation(d) {
-  d.longitude = +d.long;
-  d.latitude = +d.lat;
-  d.degree = 0;
-  return d;
-}
-
-function filterTrash(source, trashData) {
-  // const source = "AlbanyNY";
-  var city = trashData.filter(d => d.Name === source);
-  var foundCity = city[0];
-  var final = [];
-  for (var k in foundCity) {
-    if (foundCity.hasOwnProperty(k) && k !== 'Name') {
-      var nextDest = {
-        source: source,
-        dest: k,
-        weight: foundCity[k]
-      }
-      
-      final.push(nextDest);
-    }
+  /*
+   * see airports.csv
+   * convert gps coordinates to number and init degree
+   */
+  function typeLocation(d) {
+    d.longitude = +d.long;
+    d.latitude = +d.lat;
+    d.degree = 0;
+    return d;
   }
 
-  return final;
-}
+  function filterTrash(source, trashData) {
+    // const source = "AlbanyNY";
+    var city = trashData.filter(d => d.Name === source);
+    var foundCity = city[0];
+    var final = [];
+    for (var k in foundCity) {
+      if (foundCity.hasOwnProperty(k) && k !== 'Name') {
+        var nextDest = {
+          source: source,
+          dest: k,
+          weight: foundCity[k]
+        }
+        
+        final.push(nextDest);
+      }
+    }
 
-function filterData(error, locations, trashData) {  
-  var trash = filterTrash('SanJoseCA', trashData);
-  console.log('trash', trash);
-  var nodes = [];
-  var links = [];
-  trash.forEach(t => {
-    // --- Add paths
-    // Format of object is an array of objects, each containing
-    //  a type (LineString - the path will automatically draw a greatArc)
-    //  and coordinates 
-    var linked = {
-        type: "LineString",
-        coordinates: []   
-    };
+    return final;
+  }
 
-    var foundSource = nodes.find(n => n.name && (n.name === t.source));
-    var foundDest = nodes.find(n => n.name && (n.name === t.dest));
+  function filterData(error, locations, trashData) {  
+    var trash = filterTrash(chosenLocation, trashData);
+    console.log('trash', trash);
+    var nodes = [];
+    var links = [];
+    trash.forEach(t => {
+      // --- Add paths
+      // Format of object is an array of objects, each containing
+      //  a type (LineString - the path will automatically draw a greatArc)
+      //  and coordinates 
+      var linked = {
+          type: "LineString",
+          coordinates: []   
+      };
+
+      var foundSource = nodes.find(n => n.name && (n.name === t.source));
+      var foundDest = nodes.find(n => n.name && (n.name === t.dest));
+      
+      if (!foundSource) {
+        var city = locations.find(l => l.name === t.source);
+        var coords = projection([city.longitude, city.latitude]);
+        city.x = coords[0];
+        city.y = coords[1];
+        city.weight = t.weight;
+
+        nodes.push(city);
+        linked.source = city;
+        // linked.coordinates.push([city.longitude, city.latitude]);
+      } else {
+        foundSource.weight = t.weight;
+        linked.source = foundSource;
+        // linked.coordinates.push([foundSource.longitude, foundSource.latitude]);
+      }
+
+      if (!foundDest) {
+        var city = locations.find(l => l.name === t.dest);
+        var coords = projection([city.longitude, city.latitude]);
+        city.x = coords[0];
+        city.y = coords[1];
+        city.weight = t.weight;
+
+        nodes.push(city);
+        linked.target = city; 
+        // linked.coordinates.push([city.longitude, city.latitude]);
+      } else {
+        // linked.coordinates.push([foundDest.longitude, foundDest.latitude]);
+        foundDest.weight = t.weight;
+        linked.target = foundDest
+      }
+
+      links.push(linked);
+    });
+    // var byName = d3.map(locations, function(d) { return d.name; });
+    // console.log("Loaded " + byName.size() + " locations.");
+
+    // // function to sort airports by degree
+    // var bydegree = function(a, b) {
+    //   return d3.descending(a.degree, b.degree);
+    // };
+
+    // // sort remaining airports by degree
+    // locations.sort(bydegree);
+
+    // locations = locations.slice(0, 20);
+
+    // calculate projected x, y pixel locations
+    // locations = locations.map(d => {
+    //   var coords = projection([d.longitude, d.latitude]);
+    //   d.x = coords[0];
+    //   d.y = coords[1];
+    //   return d;
+    // })
+    // nodes.forEach(function(d) {
+    //   var coords = projection([d.longitude, d.latitude]);
+    //   d.x = coords[0];
+    //   d.y = coords[1];
+    // });
+
+    console.log('locations', nodes, links);
+
+    drawData(nodes, links);
+  }
+
+  function drawData(locations, links) {
+    var line = d3.line()
+      .curve(d3.curveBundle)
+      .x(d => d.x)
+      .y(d => d.y);
+
+    var locationGroup = plot.append("g").attr("id", "locations")
+      .selectAll("circle.locations")
+      .data(locations)
+      .enter();
+
+    locationGroup.append("circle")
+      .attr("r", 5)
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .style("fill", FILL_COLOR)
+      .text(d => d.name)
+      .style("opacity", d => d.name === chosenLocation ? '1' : '0')
+      .style("stroke", "#252525");
+
+    locationGroup.append("text")
+      .attr("class", "location-text")
+      .attr("x", d => d.x)
+      .attr("y", d => d.y)
+      .attr("dx", ".5em")
+      .attr("dy", "1em")
+      .text(d => d.name.slice(0, d.name.length - 2));
+
+    // function link(d) {
+    //   return "M" + d.source.y + "," + d.source.x
+    //       + "C" + (d.source.y + d.target.y) / 2 + "," + d.source.x
+    //       + " " + (d.source.y + d.target.y) / 2 + "," + d.target.x
+    //       + " " + d.target.y + "," + d.target.x;
+    // }
+    // Standard enter / update 
+    // var path = d3.geoPath()
+    //   .projection(projection);
+
+    // var arcGroup = plot.append("g").attr("id", "arcs");
+
+    // var pathArcs = arcGroup.selectAll(".arc")
+    //     .data(links);
+
+    // //enter
+    // pathArcs.enter()
+    //     .append("path")
+    //     .attr('class', 'arc')
+    //     .style('fill', 'none');
+
+    // //update
+    // pathArcs.attr('d', path)
+    //   .style('stroke', '#0000ff')
+    //   .style('stroke-width', '2px');
+    //     // Uncomment this line to remove the transition
+    //     // .call(lineTransition); 
+
+    // //exit
+    // pathArcs.exit().remove();
     
-    if (!foundSource) {
-      var city = locations.find(l => l.name === t.source);
-      var coords = projection([city.longitude, city.latitude]);
-      city.x = coords[0];
-      city.y = coords[1];
-      city.weight = t.weight;
+    var maxDomain = d3.max(links, l => +l.target.weight);
+    
+    var lineWidthRange = d3.scaleLinear()
+      .domain([0, maxDomain])
+      .range([1, 8]);
 
-      nodes.push(city);
-      linked.source = city;
-      // linked.coordinates.push([city.longitude, city.latitude]);
-    } else {
-      foundSource.weight = t.weight;
-      linked.source = foundSource;
-      // linked.coordinates.push([foundSource.longitude, foundSource.latitude]);
-    }
 
-    if (!foundDest) {
-      var city = locations.find(l => l.name === t.dest);
-      var coords = projection([city.longitude, city.latitude]);
-      city.x = coords[0];
-      city.y = coords[1];
-      city.weight = t.weight;
+    // var lineGroup = plot.append("g").attr("id", "links")
+    //   .selectAll("line.link")
+    //   .data(links)  
+    //   .enter();
 
-      nodes.push(city);
-      linked.target = city; 
-      // linked.coordinates.push([city.longitude, city.latitude]);
-    } else {
-      // linked.coordinates.push([foundDest.longitude, foundDest.latitude]);
-      foundDest.weight = t.weight;
-      linked.target = foundDest
-    }
+    // lineGroup.append("line")
+    //     // .attr("r", d => d.weight)
+    //     .style('fill', 'none')
+    //     .attr("stroke", FILL_COLOR)
+    //     .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
+    //     .attr("x1", function (d){ return d.source.x; })
+    //     .attr("y1", function (d){ return d.source.y; })
+    //     .attr("x2", function (d){ return d.target.x; })
+    //     .attr("y2", function (d){ return d.target.y; });
 
-    links.push(linked);
-  });
-  // var byName = d3.map(locations, function(d) { return d.name; });
-  // console.log("Loaded " + byName.size() + " locations.");
 
-  // // function to sort airports by degree
-  // var bydegree = function(a, b) {
-  //   return d3.descending(a.degree, b.degree);
-  // };
+    //This is the accessor function we talked about above
+    var lineFunction = d3.line()
+      .x(function(d) { return d.x; })
+      .y(function(d) { return d.y; });
 
-  // // sort remaining airports by degree
-  // locations.sort(bydegree);
+    //The data for our line
+    // var lineData = [ 
+    //   { "x": 1,   "y": 5},  
+    //   { "x": 20,  "y": 200}
+    // ];
 
-  // locations = locations.slice(0, 20);
+    var lineData = links.map(l => {
+      l.lineData = [{
+        x: l.source.x, y: l.source.y
+      }, {
+        x: l.target.x, y: l.target.y, weight: l.target.weight
+      }];
 
-  // calculate projected x, y pixel locations
-  // locations = locations.map(d => {
-  //   var coords = projection([d.longitude, d.latitude]);
-  //   d.x = coords[0];
-  //   d.y = coords[1];
-  //   return d;
-  // })
-  // nodes.forEach(function(d) {
-  //   var coords = projection([d.longitude, d.latitude]);
-  //   d.x = coords[0];
-  //   d.y = coords[1];
-  // });
-
-  console.log('locations', nodes, links);
-
-  drawData(nodes, links);
+      return l;
+    });
+      
+    //The line SVG Path we draw
+    var lineGraph = svg.append("g").attr("class", "test")
+      .selectAll(".test")
+      .data(lineData)
+      .enter()
+      .append("path")
+      .attr("d", d => lineFunction(d.lineData))
+      .attr("stroke", FILL_COLOR)
+      .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
+      .attr("fill", "none")
+      .attr('marker-end', 'url(#marker_arrow)');
+    } 
 }
 
-function drawData(locations, links) {
-  var line = d3.line()
-    .curve(d3.curveBundle)
-    .x(d => d.x)
-    .y(d => d.y);
-
-  var locationGroup = plot.append("g").attr("id", "locations")
-    .selectAll("circle.locations")
-    .data(locations)
-    .enter();
-
-  locationGroup.append("circle")
-    .attr("r", 5)
-    .attr("cx", d => d.x)
-    .attr("cy", d => d.y)
-    .style("fill", FILL_COLOR)
-    .text(d => d.name)
-    // .style("opacity", 0.6)
-    .style("stroke", "#252525");
-
-  locationGroup.append("text")
-    .attr("class", "location-text")
-    .attr("x", d => d.x)
-    .attr("y", d => d.y)
-    .attr("dx", ".5em")
-    .attr("dy", "1em")
-    .text(d => d.name.slice(0, d.name.length - 2));
-
-  // function link(d) {
-  //   return "M" + d.source.y + "," + d.source.x
-  //       + "C" + (d.source.y + d.target.y) / 2 + "," + d.source.x
-  //       + " " + (d.source.y + d.target.y) / 2 + "," + d.target.x
-  //       + " " + d.target.y + "," + d.target.x;
-  // }
-  // Standard enter / update 
-  // var path = d3.geoPath()
-  //   .projection(projection);
-
-  // var arcGroup = plot.append("g").attr("id", "arcs");
-
-  // var pathArcs = arcGroup.selectAll(".arc")
-  //     .data(links);
-
-  // //enter
-  // pathArcs.enter()
-  //     .append("path")
-  //     .attr('class', 'arc')
-  //     .style('fill', 'none');
-
-  // //update
-  // pathArcs.attr('d', path)
-  //   .style('stroke', '#0000ff')
-  //   .style('stroke-width', '2px');
-  //     // Uncomment this line to remove the transition
-  //     // .call(lineTransition); 
-
-  // //exit
-  // pathArcs.exit().remove();
-  
-  var maxDomain = d3.max(links, l => +l.target.weight);
-  
-  var lineWidthRange = d3.scaleLinear()
-    .domain([0, maxDomain])
-    .range([1, 8]);
-
-
-  // var lineGroup = plot.append("g").attr("id", "links")
-  //   .selectAll("line.link")
-  //   .data(links)  
-  //   .enter();
-
-  // lineGroup.append("line")
-  //     // .attr("r", d => d.weight)
-  //     .style('fill', 'none')
-  //     .attr("stroke", FILL_COLOR)
-  //     .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
-  //     .attr("x1", function (d){ return d.source.x; })
-  //     .attr("y1", function (d){ return d.source.y; })
-  //     .attr("x2", function (d){ return d.target.x; })
-  //     .attr("y2", function (d){ return d.target.y; });
-
-
-//This is the accessor function we talked about above
-var lineFunction = d3.line()
-  .x(function(d) { return d.x; })
-  .y(function(d) { return d.y; });
-
-//The data for our line
-// var lineData = [ 
-//   { "x": 1,   "y": 5},  
-//   { "x": 20,  "y": 200}
-// ];
-
-var lineData = links.map(l => {
-  l.lineData = [{
-    x: l.source.x, y: l.source.y
-  }, {
-    x: l.target.x, y: l.target.y, weight: l.target.weight
-  }];
-
-  return l;
-});
-  
-//The line SVG Path we draw
-var lineGraph = svg.append("g").attr("class", "test")
-  .selectAll(".test")
-  .data(lineData)
-  .enter()
-  .append("path")
-  .attr("d", d => lineFunction(d.lineData))
-  .attr("stroke", FILL_COLOR)
-  .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
-  .attr("fill", "none");
-}
