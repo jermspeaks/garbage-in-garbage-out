@@ -1,0 +1,19 @@
+{
+  "name": "garbage-in-garbage-out",
+  "version": "1.0.0",
+  "description": "Looking at the flow of garbage through US cities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jermspeaks/garbage-in-garbage-out.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jermspeaks/garbage-in-garbage-out/issues"
+  },
+  "homepage": "https://github.com/jermspeaks/garbage-in-garbage-out#readme"
+}
