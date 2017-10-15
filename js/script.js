@@ -428,26 +428,30 @@ function update(chosenLocation) {
 
     lines.exit().remove();
 
-    // var lineSize = d3.scaleLinear().domain([0, maxDomain]).range([1, 6]);
+    var lineSize = d3.scaleLinear().domain([0, maxDomain]).range([1, 6]);
 
-    // svg.append("g")
-    //   .attr("class", "legendSizeLine")
-    //   .attr("transform", "translate(0, 100)");
+    svg.select('g.legendSizeLine').remove();
 
-    // var legendSizeLine = d3.legendSize()
-    //       .scale(lineSize)
-    //       .shape("line")
-    //       .orient("horizontal")
-    //       //otherwise labels would have displayed:
-    //       // 0, 2.5, 5, 10
-    //       // .labels(["tiny testing at the beginning", "small", "medium", "large", "grand, all the way long label"])
-    //       .labelWrap(30)
-    //       .shapeWidth(40)
-    //       .labelAlign("start")
-    //       .shapePadding(10);
+    svg.append("g")
+      .attr("class", "legendSizeLine")
+      .attr("transform", "translate(0, 500)");
 
-    // svg.select(".legendSizeLine")
-    //   .call(legendSizeLine);
+    var legendSizeLine = d3.legendSize()
+          .scale(lineSize)
+          .shape("line")
+          .orient("horizontal")
+          //otherwise labels would have displayed:
+          // 0, 2.5, 5, 10
+          // .labels(["tiny testing at the beginning", "small", "medium", "large", "grand, all the way long label"])
+          .labelWrap(30)
+          .shapeWidth(40)
+          .labelAlign("start")
+          .shapePadding(10);
+
+    svg.select(".legendSizeLine")
+      .call(legendSizeLine);
+
+
   }   
 }
 
