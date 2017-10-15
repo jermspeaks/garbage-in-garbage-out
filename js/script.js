@@ -15,7 +15,8 @@ var svg = d3.select("body").append("svg")
 
 var states = svg.append("g").attr("class", "states");
 var plot = svg.append("g").attr("class", "plot").attr("id", "plot");
-
+var lineGraph = svg.append("g").attr("class", "lines");
+var locationGroup = plot.append("g").attr("id", "locations")
 
 var markerArrow = svg.append('svg:defs')
     .append('svg:marker')
@@ -236,81 +237,40 @@ function update(chosenLocation) {
       .x(d => d.x)
       .y(d => d.y);
 
-    var locationGroup = plot.append("g").attr("id", "locations")
-      .selectAll("circle.locations")
-      .data(locations)
-      .enter();
+    var locationCircles = locationGroup.selectAll("circle.locations")
+      .data(locations, d => d)
 
-    locationGroup.append("circle")
+    locationCircles.enter()
+      .append("circle")
       .attr("r", 5)
       .attr("cx", d => d.x)
       .attr("cy", d => d.y)
       .style("fill", FILL_COLOR)
-      .text(d => d.name)
-      .style("opacity", d => d.name === chosenLocation ? '1' : '0')
-      .style("stroke", "#252525");
+      // .text(d => d.name)
+      // .style("opacity", d => d.name === chosenLocation ? '1' : '0')
+      .style("stroke", "#252525")
+      .merge(locationCircles);
 
-    locationGroup.append("text")
+    var locationText = locationGroup.selectAll('text')
+      .data(locations, d => d);
+    
+    locationText.enter().append("text")
       .attr("class", "location-text")
       .attr("x", d => d.x)
       .attr("y", d => d.y)
       .attr("dx", ".5em")
       .attr("dy", "1em")
-      .text(d => d.name.slice(0, d.name.length - 2));
+      .text(d => d.name.slice(0, d.name.length - 2))
+      .merge(locationText);
 
-    // function link(d) {
-    //   return "M" + d.source.y + "," + d.source.x
-    //       + "C" + (d.source.y + d.target.y) / 2 + "," + d.source.x
-    //       + " " + (d.source.y + d.target.y) / 2 + "," + d.target.x
-    //       + " " + d.target.y + "," + d.target.x;
-    // }
-    // Standard enter / update 
-    // var path = d3.geoPath()
-    //   .projection(projection);
+    locationCircles.exit().remove();
+    locationText.exit().remove();
 
-    // var arcGroup = plot.append("g").attr("id", "arcs");
-
-    // var pathArcs = arcGroup.selectAll(".arc")
-    //     .data(links);
-
-    // //enter
-    // pathArcs.enter()
-    //     .append("path")
-    //     .attr('class', 'arc')
-    //     .style('fill', 'none');
-
-    // //update
-    // pathArcs.attr('d', path)
-    //   .style('stroke', '#0000ff')
-    //   .style('stroke-width', '2px');
-    //     // Uncomment this line to remove the transition
-    //     // .call(lineTransition); 
-
-    // //exit
-    // pathArcs.exit().remove();
-    
     var maxDomain = d3.max(links, l => +l.target.weight);
     
     var lineWidthRange = d3.scaleLinear()
       .domain([0, maxDomain])
       .range([1, 8]);
-
-
-    // var lineGroup = plot.append("g").attr("id", "links")
-    //   .selectAll("line.link")
-    //   .data(links)  
-    //   .enter();
-
-    // lineGroup.append("line")
-    //     // .attr("r", d => d.weight)
-    //     .style('fill', 'none')
-    //     .attr("stroke", FILL_COLOR)
-    //     .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
-    //     .attr("x1", function (d){ return d.source.x; })
-    //     .attr("y1", function (d){ return d.source.y; })
-    //     .attr("x2", function (d){ return d.target.x; })
-    //     .attr("y2", function (d){ return d.target.y; });
-
 
     //This is the accessor function we talked about above
     var lineFunction = d3.line()
@@ -332,18 +292,20 @@ function update(chosenLocation) {
 
       return l;
     });
-      
+
     //The line SVG Path we draw
-    var lineGraph = svg.append("g").attr("class", "test")
-      .selectAll(".test")
-      .data(lineData)
-      .enter()
+    var lines = lineGraph.selectAll("path")
+      .data(lineData, d => d);
+
+    lines.enter()
       .append("path")
       .attr("d", d => lineFunction(d.lineData))
       .attr("stroke", FILL_COLOR)
       .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
       .attr("fill", "none")
-      .attr('marker-end', 'url(#marker_arrow)');
-    } 
+      .merge(lines);
+
+    lines.exit().remove();
+  }   
 }
 

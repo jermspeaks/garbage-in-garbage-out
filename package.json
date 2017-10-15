@@ -23,6 +23,8 @@
     "csv-parse": "^1.2.4",
     "csvtojson": "^1.1.9",
     "d3": "^4.11.0",
-    "stream-transform": "^0.1.2"
+    "queue": "^4.4.1",
+    "stream-transform": "^0.1.2",
+    "topojson": "^3.0.2"
   }
 }
