@@ -15,6 +15,32 @@ var svg = d3.select("body").append("svg")
 var states = svg.append("g").attr("class", "states");
 var plot = svg.append("g").attr("class", "plot").attr("id", "plot");
 
+function lineTransition(path) {
+  path.transition()
+      //NOTE: Change this number (in ms) to make lines draw faster or slower
+      .duration(5500)
+      .attrTween("stroke-dasharray", tweenDash)
+      .each("end", function(d,i) { 
+          ////Uncomment following line to re-transition
+          //d3.select(this).call(transition); 
+          
+          //We might want to do stuff when the line reaches the target,
+          //  like start the pulsating or add a new point or tell the
+          //  NSA to listen to this guy's phone calls
+          //doStuffWhenLineFinishes(d,i);
+      });
+}
+
+var tweenDash = function tweenDash() {
+    //This function is used to animate the dash-array property, which is a
+    //  nice hack that gives us animation along some arbitrary path (in this
+    //  case, makes it look like a line is being drawn from point A to B)
+    var len = this.getTotalLength(),
+        interpolate = d3.interpolateString("0," + len, len + "," + len);
+
+    return function(t) { return interpolate(t); };
+};
+
 var path = d3.geoPath();
 
 // Take projection
@@ -221,19 +247,53 @@ function drawData(locations, links) {
     .range([0, 5]);
 
 
-  var lineGroup = plot.append("g").attr("id", "links")
-    .selectAll("line.link")
-    .data(links)  
-    .enter();
+  // var lineGroup = plot.append("g").attr("id", "links")
+  //   .selectAll("line.link")
+  //   .data(links)  
+  //   .enter();
 
-  lineGroup.append("line")
-      // .attr("r", d => d.weight)
-      .attr("stroke", FILL_COLOR)
-      .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
-      .attr("x1", function (d){ return d.source.x; })
-      .attr("y1", function (d){ return d.source.y; })
-      .attr("x2", function (d){ return d.target.x; })
-      .attr("y2", function (d){ return d.target.y; });
+  // lineGroup.append("line")
+  //     // .attr("r", d => d.weight)
+  //     .style('fill', 'none')
+  //     .attr("stroke", FILL_COLOR)
+  //     .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
+  //     .attr("x1", function (d){ return d.source.x; })
+  //     .attr("y1", function (d){ return d.source.y; })
+  //     .attr("x2", function (d){ return d.target.x; })
+  //     .attr("y2", function (d){ return d.target.y; });
+
+
+//This is the accessor function we talked about above
+var lineFunction = d3.line()
+  .x(function(d) { return d.x; })
+  .y(function(d) { return d.y; });
+
+//The data for our line
+// var lineData = [ 
+//   { "x": 1,   "y": 5},  
+//   { "x": 20,  "y": 200}
+// ];
+
+var lineData = links.map(l => {
+  l.lineData = [{
+    x: l.source.x, y: l.source.y
+  }, {
+    x: l.target.x, y: l.target.y, weight: l.target.weight
+  }];
+
+  return l;
+});
+  
+//The line SVG Path we draw
+var lineGraph = svg.append("g").attr("class", "test")
+  .selectAll(".test")
+  .data(lineData)
+  .enter()
+  .append("path")
+  .attr("d", d => lineFunction(d.lineData))
+  .attr("stroke", FILL_COLOR)
+  .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
+  .attr("fill", "none");
    
   // var link = d3.linkHorizontal()
   //   .x(function(d) { return d.y; })
