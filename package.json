@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/jermspeaks/garbage-in-garbage-out/issues"
   },
-  "homepage": "https://github.com/jermspeaks/garbage-in-garbage-out#readme"
+  "homepage": "https://github.com/jermspeaks/garbage-in-garbage-out#readme",
+  "devDependencies": {
+    "request": "^2.83.0"
+  }
 }

@@ -15,7 +15,7 @@ var plot = svg.append("g").attr("class", "plot").attr("id", "plot");
 var path = d3.geoPath().projection(projection);
 
 // Take projection
-var projection = d3.geoAlbers();
+var projection = d3.geoAlbersUsa();
 
 function createStates() {
   d3.json("data/us-10m.v1.json", function(error, us) {
