@@ -21,6 +21,28 @@ var plot = svg.append("g").attr("class", "plot").attr("id", "plot");
 var lineGraph = svg.append("g").attr("class", "lines");
 var locationGroup = plot.append("g").attr("id", "locations")
 
+var ordinal = d3.scaleOrdinal()
+  .domain(["SENT", "RECEIVED"])
+  .range([SENDING_COLOR, RECEIVING_COLOR]);
+
+svg.append("g")
+  .attr("class", "legendOrdinal")
+  .attr("transform", "translate(20,20)");
+
+var legendOrdinal = d3.legendColor()
+  //d3 symbol creates a path-string, for example
+  //"M0,-8.059274488676564L9.306048591020996,
+  //8.059274488676564 -9.306048591020996,8.059274488676564Z"
+  .shape("path", d3.symbol().type(d3.symbolTriangle).size(150)())
+  .shapePadding(10)
+  //use cellFilter to hide the "e" cell
+  .cellFilter(function(d){ return d.label !== "e" })
+  .scale(ordinal);
+
+svg.select(".legendOrdinal")
+  .call(legendOrdinal);
+
+
 var markerArrow = svg.append('svg:defs')
     .append('svg:marker')
     .attr('id', 'marker_arrow')
