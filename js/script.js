@@ -3,7 +3,7 @@ const STATE_BORDER_COLOR = '#fff';
 const SENDING_COLOR = 'rgb(28,145,236)';
 const RECEIVING_COLOR = 'rgb(236,28,36)';
 // const FILL_COLOR = '#5c6066';
-const FILL_COLOR = SENDING_COLOR;
+const FILL_COLOR = '#fff';
 
 var width = 960,
     height = 600;
@@ -115,11 +115,11 @@ selector.onchange = evt => {
 
 function update(chosenLocation) {
   d3.queue()
-  .defer(d3.csv, "data/labels.csv", typeLocation)
-  // .defer(d3.csv, "data/trash.csv")
-  .defer(d3.json, "data/waste-cleaned.json")
-  .defer(d3.json, "data/waste-cleaned.json")
-  .await(filterData);
+    .defer(d3.csv, "data/labels.csv", typeLocation)
+    // .defer(d3.csv, "data/trash.csv")
+    .defer(d3.json, "data/waste-cleaned.json")
+    .defer(d3.json, "data/received-waste.json")
+    .await(filterData);
 
   /*
    * see airports.csv
@@ -173,10 +173,13 @@ function update(chosenLocation) {
   }
 
   function filterData(error, locations, trashData, receivedTrashData) {  
+    // console.log('locations', typeof locations);
+    // console.log('trashData', typeof trashData);
+    // console.log('receivedTrashData', typeof receivedTrashData);
     var trash = filterTrash(chosenLocation, trashData);
-    // var rTrash = filterTrash(chosenLocation, filterRTrash);
+    var rTrash = filterRTrash(chosenLocation, receivedTrashData);
     console.log('sent trash', trash);
-    // console.log('received trash', rTrash);
+    console.log('received trash', rTrash);
     var nodes = [];
     var links = [];
 
@@ -199,12 +202,14 @@ function update(chosenLocation) {
         city.x = coords[0];
         city.y = coords[1];
         city.weight = t.weight;
+        city.color = SENDING_COLOR;
 
         nodes.push(city);
         linked.source = city;
         // linked.coordinates.push([city.longitude, city.latitude]);
       } else {
         foundSource.weight = t.weight;
+        foundSource.color = SENDING_COLOR;
         linked.source = foundSource;
         // linked.coordinates.push([foundSource.longitude, foundSource.latitude]);
       }
@@ -215,6 +220,7 @@ function update(chosenLocation) {
         city.x = coords[0];
         city.y = coords[1];
         city.weight = t.weight;
+        city.color = SENDING_COLOR;
 
         nodes.push(city);
         linked.target = city; 
@@ -222,11 +228,70 @@ function update(chosenLocation) {
       } else {
         // linked.coordinates.push([foundDest.longitude, foundDest.latitude]);
         foundDest.weight = t.weight;
+        foundDest.color = SENDING_COLOR;
         linked.target = foundDest
       }
 
       links.push(linked);
     });
+
+    rTrash.forEach(t => {
+      // --- Add paths
+      // Format of object is an array of objects, each containing
+      //  a type (LineString - the path will automatically draw a greatArc)
+      //  and coordinates 
+      var linked = {
+          type: "LineString",
+          coordinates: []   
+      };
+
+      var foundSource = nodes.find(n => n.name && (n.name === t.source));
+      var foundDest = nodes.find(n => n.name && (n.name === t.dest));
+
+      console.log('t', t);
+      console.log('foundSource', foundSource);
+      
+      if (!foundSource) {
+        var city = locations.find(l => l.name === t.source);
+        console.log('locations', t.source);
+        console.log('city', city);
+        var coords = projection([city.longitude, city.latitude]);
+        city.x = coords[0];
+        city.y = coords[1];
+        city.weight = t.weight;
+        city.color = RECEIVING_COLOR;
+
+        nodes.push(city);
+        linked.source = city;
+        // linked.coordinates.push([city.longitude, city.latitude]);
+      } else {
+        foundSource.weight = t.weight;
+        foundSource.color = RECEIVING_COLOR;
+        linked.source = foundSource;
+        // linked.coordinates.push([foundSource.longitude, foundSource.latitude]);
+      }
+
+      if (!foundDest) {
+        var city = locations.find(l => l.name === t.dest);
+        var coords = projection([city.longitude, city.latitude]);
+        city.x = coords[0];
+        city.y = coords[1];
+        city.weight = t.weight;
+        city.color = RECEIVING_COLOR;
+
+        nodes.push(city);
+        linked.target = city; 
+        // linked.coordinates.push([city.longitude, city.latitude]);
+      } else {
+        // linked.coordinates.push([foundDest.longitude, foundDest.latitude]);
+        foundDest.weight = t.weight;
+        foundDest.color = RECEIVING_COLOR;
+        linked.target = foundDest
+      }
+
+      links.push(linked);
+    });
+
     // var byName = d3.map(locations, function(d) { return d.name; });
     // console.log("Loaded " + byName.size() + " locations.");
 
@@ -321,7 +386,7 @@ function update(chosenLocation) {
       l.lineData = [{
         x: l.source.x, y: l.source.y
       }, {
-        x: l.target.x, y: l.target.y, weight: l.target.weight
+        x: l.target.x, y: l.target.y, weight: l.target.weight, color: l.target.color
       }];
 
       return l;
@@ -334,7 +399,7 @@ function update(chosenLocation) {
     lines.enter()
       .append("path")
       .attr("d", d => lineFunction(d.lineData))
-      .attr("stroke", FILL_COLOR)
+      .attr("stroke", d => d.target.color)
       .attr("stroke-width", d => lineWidthRange(+d.target.weight) + 'px')
       .attr("fill", "none")
       .merge(lines);

@@ -1,0 +1,1119 @@
+[
+  {
+    "Name": "AlbanyNY",
+    "NewYorkNY": "652",
+    "StLouisIL": "6"
+  },
+  {
+    "GreenvilleSC": "154",
+    "HoustonTX": "14",
+    "JacksonvilleFL": "142",
+    "Name": "AtlantaGA",
+    "OrlandoFL": "95",
+    "otherSC": "113",
+    "otherTN": "28"
+  },
+  {
+    "Name": "AustinTX",
+    "NewYorkNY": "384"
+  },
+  {
+    "BaltimoreMD": "828",
+    "BuffaloNY": "3",
+    "CincinnatiOH": "7",
+    "DallasTX": "1",
+    "Louisville/JeffersonCountyKY": "5",
+    "Name": "BaltimoreMD",
+    "WashingtonDC": "61",
+    "otherDE": "44",
+    "otherVA": "32"
+  },
+  {
+    "Name": "BatonRougeLA"
+  },
+  {
+    "BeaumontTX": "82",
+    "Name": "BeaumontTX",
+    "SanAntonioTX": "47",
+    "otherNM": "35"
+  },
+  {
+    "AtlantaGA": "269",
+    "GrandRapidsMI": "13",
+    "GreensboroNC": "2",
+    "LakeCharlesLA": "1",
+    "Name": "BirminghamAL",
+    "NashvilleTN": "102",
+    "OrlandoFL": "9",
+    "TulsaOK": "20",
+    "otherAL": "332",
+    "otherTN": "29"
+  },
+  {
+    "BostonMA": "78",
+    "Name": "BostonMA",
+    "otherCT": "20",
+    "otherMA": "82",
+    "otherME": "218",
+    "otherNH": "2"
+  },
+  {
+    "BuffaloNY": "156",
+    "ClevelandOH": "4",
+    "DetroitMI": "53",
+    "LakeCharlesLA": "1",
+    "Name": "BuffaloNY",
+    "otherMI": "3",
+    "otherNY": "90",
+    "otherPA": "4"
+  },
+  {
+    "CharlestonSC": "252",
+    "CincinnatiOH": "19",
+    "MiamiFL": "154",
+    "Name": "CharlestonSC",
+    "OrlandoFL": "132",
+    "TampaFL": "3",
+    "otherFL": "245",
+    "otherGA": "14",
+    "otherKY": "184",
+    "otherMA": "10",
+    "otherMD": "21",
+    "otherTN": "204"
+  },
+  {
+    "CharlotteNC": "556",
+    "ColumbusOH": "2",
+    "GreensboroNC": "312",
+    "Name": "CharlotteNC",
+    "otherNC": "51",
+    "otherVA": "71"
+  },
+  {
+    "ChicagoIL": "2353",
+    "CincinnatiOH": "19",
+    "ElPasoTX": "3",
+    "GrandRapidsMI": "118",
+    "HoustonTX": "15",
+    "IndianapolisIN": "13",
+    "LakeCharlesLA": "3",
+    "Name": "ChicagoIL",
+    "PhiladelphiaPA": "14",
+    "PittsburghPA": "5",
+    "SaltLakeCityUT": "5",
+    "StLouisIL": "221",
+    "otherFL": "2",
+    "otherIA": "84",
+    "otherIL": "226",
+    "otherIN": "103",
+    "otherMD": "25",
+    "otherMN": "28",
+    "otherND": "6",
+    "otherNE": "15",
+    "otherNM": "2",
+    "otherNY": "13",
+    "otherOH": "8",
+    "otherSD": "16",
+    "otherWI": "62"
+  },
+  {
+    "CincinnatiOH": "94",
+    "ColumbusOH": "164",
+    "DallasTX": "7",
+    "DaytonOH": "43",
+    "GrandRapidsMI": "181",
+    "Louisville/JeffersonCountyKY": "11",
+    "Name": "CincinnatiOH",
+    "PhiladelphiaPA": "4",
+    "StLouisIL": "26",
+    "otherIN": "4",
+    "otherKY": "76",
+    "otherMN": "1",
+    "otherVA": "5"
+  },
+  {
+    "BostonMA": "3",
+    "CincinnatiOH": "1",
+    "ClevelandOH": "1653",
+    "ColumbusOH": "326",
+    "DaytonOH": "14",
+    "GrandRapidsMI": "4",
+    "HartfordCT": "7",
+    "IndianapolisIN": "1",
+    "Louisville/JeffersonCountyKY": "28",
+    "MinneapolisMN": "12",
+    "Name": "ClevelandOH",
+    "PhiladelphiaPA": "20",
+    "PittsburghPA": "12",
+    "StLouisIL": "4",
+    "VirginiaBeachVA": "1",
+    "WashingtonDC": "1",
+    "WichitaKS": "5",
+    "otherAL": "1",
+    "otherMA": "45",
+    "otherMI": "24",
+    "otherNY": "9",
+    "otherSD": "1",
+    "otherWV": "26"
+  },
+  {
+    "DetroitMI": "10",
+    "IndianapolisIN": "1",
+    "LakeCharlesLA": "1",
+    "Name": "ColumbusOH",
+    "otherMI": "8",
+    "otherWV": "19"
+  },
+  {
+    "AustinTX": "1",
+    "CorpusChristiTX": "22",
+    "LaredoTX": "2",
+    "Name": "CorpusChristiTX"
+  },
+  {
+    "AtlantaGA": "20",
+    "BostonMA": "2",
+    "DallasTX": "787",
+    "KansasCityMO": "14",
+    "Name": "DallasTX",
+    "OklahomaCityOK": "34",
+    "PhiladelphiaPA": "3",
+    "PittsburghPA": "2",
+    "RichmondVA": "26",
+    "SanAntonioTX": "1",
+    "StLouisIL": "2",
+    "TulsaOK": "6",
+    "WashingtonDC": "1",
+    "otherLA": "52",
+    "otherMO": "1",
+    "otherNM": "65",
+    "otherOK": "8",
+    "otherPA": "3",
+    "otherSD": "1"
+  },
+  {
+    "DaytonOH": "81",
+    "Name": "DaytonOH"
+  },
+  {
+    "DenverCO": "163",
+    "Name": "DenverCO",
+    "otherCO": "127",
+    "otherSD": "18",
+    "otherWY": "22"
+  },
+  {
+    "BaltimoreMD": "38",
+    "CincinnatiOH": "4",
+    "ClevelandOH": "383",
+    "ColumbusOH": "18",
+    "DaytonOH": "5",
+    "DetroitMI": "900",
+    "GrandRapidsMI": "25",
+    "GreensboroNC": "1",
+    "HoustonTX": "7",
+    "KnoxvilleTN": "1",
+    "LakeCharlesLA": "1",
+    "Louisville/JeffersonCountyKY": "7",
+    "MiamiFL": "1",
+    "Name": "DetroitMI",
+    "PhiladelphiaPA": "46",
+    "otherAR": "13",
+    "otherMA": "5",
+    "otherMD": "3",
+    "otherMI": "272",
+    "otherNC": "9",
+    "otherTN": "2"
+  },
+  {
+    "ElPasoTX": "64",
+    "KansasCityMO": "32",
+    "MinneapolisMN": "25",
+    "Name": "ElPasoTX"
+  },
+  {
+    "CincinnatiOH": "2",
+    "DallasTX": "3",
+    "DaytonOH": "10",
+    "DetroitMI": "310",
+    "GrandRapidsMI": "34",
+    "HoustonTX": "10",
+    "Name": "FortWayneIN",
+    "PhiladelphiaPA": "1",
+    "RaleighNC": "9",
+    "WashingtonDC": "5",
+    "otherAR": "1",
+    "otherFL": "5",
+    "otherIA": "129",
+    "otherIL": "1",
+    "otherMA": "1",
+    "otherMN": "82",
+    "otherNM": "2",
+    "otherTN": "1"
+  },
+  {
+    "Name": "FresnoCA",
+    "otherCA": "3"
+  },
+  {
+    "CincinnatiOH": "23",
+    "GrandRapidsMI": "276",
+    "Name": "GrandRapidsMI",
+    "otherIL": "2",
+    "otherMI": "69"
+  },
+  {
+    "CharlotteNC": "46",
+    "DenverCO": "2",
+    "Name": "GreensboroNC",
+    "RichmondVA": "5",
+    "UrbanHonoluluHI": "1"
+  },
+  {
+    "Name": "GreenvilleSC"
+  },
+  {
+    "ElPasoTX": "3",
+    "HartfordCT": "2",
+    "Name": "HartfordCT",
+    "otherMA": "2"
+  },
+  {
+    "AlbanyNY": "25",
+    "BeaumontTX": "27",
+    "ColumbusOH": "1",
+    "CorpusChristiTX": "1",
+    "LakeCharlesLA": "2",
+    "LaredoTX": "7",
+    "Name": "HoustonTX",
+    "PhiladelphiaPA": "32",
+    "PhoenixAZ": "4",
+    "RaleighNC": "2",
+    "StLouisIL": "5",
+    "TulsaOK": "1",
+    "otherTX": "61"
+  },
+  {
+    "ColumbusOH": "19",
+    "DetroitMI": "8",
+    "GrandRapidsMI": "137",
+    "IndianapolisIN": "75",
+    "JacksonvilleFL": "5",
+    "Louisville/JeffersonCountyKY": "61",
+    "Name": "IndianapolisIN",
+    "PhiladelphiaPA": "6",
+    "VirginiaBeachVA": "41",
+    "otherAR": "77",
+    "otherIN": "221",
+    "otherKY": "118",
+    "otherMA": "4",
+    "otherMI": "16",
+    "otherOK": "1",
+    "otherPA": "6"
+  },
+  {
+    "JacksonvilleFL": "75",
+    "Name": "JacksonvilleFL",
+    "OrlandoFL": "61",
+    "TampaFL": "22",
+    "otherFL": "61"
+  },
+  {
+    "KansasCityMO": "16",
+    "Name": "KansasCityMO",
+    "PittsburghPA": "1",
+    "otherKS": "45",
+    "otherMO": "2",
+    "otherSD": "1"
+  },
+  {
+    "DallasTX": "9",
+    "DenverCO": "11",
+    "ElPasoTX": "9",
+    "GreenvilleSC": "5",
+    "LaredoTX": "2",
+    "Name": "KnoxvilleTN",
+    "SanAntonioTX": "2",
+    "otherIN": "1",
+    "otherKY": "35",
+    "otherLA": "2",
+    "otherTX": "2"
+  },
+  {
+    "Name": "LakeCharlesLA",
+    "otherAR": "277"
+  },
+  {
+    "DallasTX": "2",
+    "Name": "LaredoTX",
+    "TucsonAZ": "4"
+  },
+  {
+    "Name": "LasVegasNV"
+  },
+  {
+    "DenverCO": "12",
+    "ElPasoTX": "13",
+    "FresnoCA": "1",
+    "GrandRapidsMI": "3",
+    "LasVegasNV": "314",
+    "LosAngelesCA": "36165",
+    "MiamiFL": "78",
+    "Name": "LosAngelesCA",
+    "OklahomaCityOK": "2",
+    "PhiladelphiaPA": "1",
+    "PhoenixAZ": "232",
+    "SaltLakeCityUT": "15",
+    "SanAntonioTX": "1",
+    "SanJoseCA": "578",
+    "TampaFL": "1",
+    "TucsonAZ": "41",
+    "WichitaKS": "6",
+    "otherCA": "514",
+    "otherCO": "6",
+    "otherGA": "1",
+    "otherID": "13",
+    "otherIL": "2",
+    "otherMO": "1",
+    "otherNV": "1",
+    "otherOR": "3",
+    "otherTX": "2"
+  },
+  {
+    "CharlestonSC": "4",
+    "CharlotteNC": "6",
+    "ElPasoTX": "3",
+    "IndianapolisIN": "3",
+    "KnoxvilleTN": "1",
+    "Louisville/JeffersonCountyKY": "36",
+    "Name": "Louisville/JeffersonCountyKY",
+    "PhiladelphiaPA": "20",
+    "PittsburghPA": "15",
+    "StLouisIL": "10",
+    "otherKY": "26",
+    "otherOH": "44"
+  },
+  {
+    "MemphisTN": "112",
+    "Name": "MemphisTN",
+    "NashvilleTN": "7",
+    "otherAR": "49",
+    "otherKY": "79",
+    "otherMS": "32"
+  },
+  {
+    "MiamiFL": "958",
+    "Name": "MiamiFL"
+  },
+  {
+    "ChicagoIL": "24",
+    "GrandRapidsMI": "2",
+    "IndianapolisIN": "1",
+    "MilwaukeeWI": "1330",
+    "Name": "MilwaukeeWI",
+    "StLouisIL": "5",
+    "otherIL": "92",
+    "otherMI": "6",
+    "otherNY": "14"
+  },
+  {
+    "ChicagoIL": "9",
+    "MinneapolisMN": "191",
+    "Name": "MinneapolisMN",
+    "otherIA": "17",
+    "otherMN": "121",
+    "otherMT": "2",
+    "otherND": "9",
+    "otherNE": "12",
+    "otherWI": "18"
+  },
+  {
+    "ClevelandOH": "71",
+    "Name": "MobileAL",
+    "otherFL": "93",
+    "otherGA": "1"
+  },
+  {
+    "HoustonTX": "4",
+    "IndianapolisIN": "3",
+    "Name": "NashvilleTN",
+    "PittsburghPA": "6",
+    "otherTN": "106"
+  },
+  {
+    "BostonMA": "12",
+    "CharlotteNC": "27",
+    "CincinnatiOH": "3",
+    "DallasTX": "65",
+    "DenverCO": "59",
+    "ElPasoTX": "16",
+    "GreenvilleSC": "26",
+    "JacksonvilleFL": "29",
+    "Louisville/JeffersonCountyKY": "9",
+    "MemphisTN": "52",
+    "MiamiFL": "1",
+    "Name": "NewOrleansLA",
+    "NewOrleansLA": "957",
+    "PhoenixAZ": "172",
+    "PittsburghPA": "4",
+    "RichmondVA": "5",
+    "SaltLakeCityUT": "7",
+    "StLouisIL": "128",
+    "TucsonAZ": "7",
+    "TulsaOK": "3",
+    "WashingtonDC": "29",
+    "otherFL": "17",
+    "otherGA": "27",
+    "otherIA": "43",
+    "otherIL": "22",
+    "otherKS": "1",
+    "otherMA": "4",
+    "otherMS": "5",
+    "otherNE": "7",
+    "otherNY": "18",
+    "otherWI": "18"
+  },
+  {
+    "AlbanyNY": "4",
+    "BostonMA": "13",
+    "ChicagoIL": "51",
+    "ClevelandOH": "28",
+    "ColumbusOH": "12",
+    "FortWayneIN": "1",
+    "GrandRapidsMI": "2",
+    "HartfordCT": "7",
+    "Name": "NewYorkNY",
+    "NewYorkNY": "1932",
+    "PhiladelphiaPA": "207",
+    "StLouisIL": "15",
+    "WashingtonDC": "32",
+    "otherCT": "267",
+    "otherIN": "5",
+    "otherMA": "80",
+    "otherMD": "55",
+    "otherPA": "65",
+    "otherVT": "1"
+  },
+  {
+    "Name": "OklahomaCityOK"
+  },
+  {
+    "Name": "OmahaNE",
+    "otherIA": "176",
+    "otherSD": "22"
+  },
+  {
+    "Name": "OrlandoFL",
+    "OrlandoFL": "29",
+    "otherFL": "6"
+  },
+  {
+    "BostonMA": "8",
+    "BuffaloNY": "4",
+    "ColumbusOH": "9",
+    "HartfordCT": "7",
+    "IndianapolisIN": "1",
+    "Name": "PhiladelphiaPA",
+    "NewYorkNY": "285",
+    "PhiladelphiaPA": "2214",
+    "RichmondVA": "2",
+    "otherDE": "103",
+    "otherMA": "2",
+    "otherNY": "21",
+    "otherPA": "292",
+    "otherVA": "33"
+  },
+  {
+    "ElPasoTX": "8",
+    "Name": "PhoenixAZ",
+    "PortlandOR": "18",
+    "StLouisIL": "2",
+    "TucsonAZ": "307"
+  },
+  {
+    "AlbanyNY": "3",
+    "BaltimoreMD": "5",
+    "BostonMA": "18",
+    "BuffaloNY": "30",
+    "CharlestonSC": "2",
+    "CharlotteNC": "7",
+    "ChicagoIL": "161",
+    "CincinnatiOH": "31",
+    "ColumbusOH": "27",
+    "DaytonOH": "14",
+    "FortWayneIN": "5",
+    "GrandRapidsMI": "35",
+    "HartfordCT": "6",
+    "LakeCharlesLA": "2",
+    "Name": "PittsburghPA",
+    "NewYorkNY": "111",
+    "PhiladelphiaPA": "3",
+    "PittsburghPA": "1547",
+    "WashingtonDC": "4",
+    "otherAL": "14",
+    "otherKY": "46",
+    "otherMA": "8",
+    "otherMD": "11",
+    "otherNY": "479",
+    "otherTN": "11",
+    "otherWV": "66"
+  },
+  {
+    "Name": "PortlandOR",
+    "PortlandOR": "1989",
+    "SanDiegoCA": "3",
+    "otherID": "57",
+    "otherOR": "129",
+    "otherWA": "66",
+    "otherWY": "87"
+  },
+  {
+    "CharlestonSC": "2",
+    "Name": "RaleighNC",
+    "RaleighNC": "25",
+    "otherTN": "1"
+  },
+  {
+    "AustinTX": "1",
+    "BirminghamAL": "14",
+    "CharlotteNC": "14",
+    "CincinnatiOH": "1",
+    "DallasTX": "2",
+    "DenverCO": "5",
+    "GreenvilleSC": "1",
+    "HoustonTX": "9",
+    "LakeCharlesLA": "2",
+    "MemphisTN": "11",
+    "MilwaukeeWI": "17",
+    "MobileAL": "4",
+    "Name": "otherAL",
+    "NashvilleTN": "83",
+    "OklahomaCityOK": "5",
+    "OrlandoFL": "22",
+    "PittsburghPA": "10",
+    "RaleighNC": "3",
+    "RichmondVA": "5",
+    "SaltLakeCityUT": "2",
+    "SanJoseCA": "38",
+    "StLouisIL": "6",
+    "TampaFL": "3",
+    "WichitaKS": "16",
+    "otherAL": "788",
+    "otherFL": "10",
+    "otherSC": "53",
+    "otherTN": "172",
+    "otherVA": "35"
+  },
+  {
+    "Name": "otherAK"
+  },
+  {
+    "Name": "otherAZ",
+    "PhoenixAZ": "48",
+    "otherCO": "5"
+  },
+  {
+    "BeaumontTX": "3",
+    "CincinnatiOH": "159",
+    "ElPasoTX": "3",
+    "KansasCityMO": "168",
+    "LakeCharlesLA": "1",
+    "MemphisTN": "31",
+    "Name": "otherAR",
+    "OklahomaCityOK": "30",
+    "TulsaOK": "17",
+    "WichitaKS": "90",
+    "otherAR": "2598",
+    "otherKS": "8",
+    "otherWV": "39"
+  },
+  {
+    "LosAngelesCA": "8",
+    "Name": "otherCA",
+    "otherVA": "6"
+  },
+  {
+    "DenverCO": "715",
+    "ElPasoTX": "54",
+    "Name": "otherCO",
+    "StLouisIL": "3",
+    "otherCO": "340"
+  },
+  {
+    "Name": "otherCT",
+    "otherCT": "106"
+  },
+  {
+    "Name": "otherDE"
+  },
+  {
+    "Name": "otherFL",
+    "OrlandoFL": "4",
+    "otherFL": "31"
+  },
+  {
+    "AtlantaGA": "103",
+    "Name": "otherGA",
+    "OrlandoFL": "53",
+    "TampaFL": "6",
+    "WashingtonDC": "59",
+    "otherGA": "132",
+    "otherMO": "1"
+  },
+  {
+    "Name": "otherHI"
+  },
+  {
+    "Name": "otherID",
+    "otherID": "79",
+    "otherWA": "14",
+    "otherWY": "11"
+  },
+  {
+    "CincinnatiOH": "1",
+    "Name": "otherIL",
+    "StLouisIL": "23",
+    "otherIL": "1023"
+  },
+  {
+    "AustinTX": "1",
+    "CincinnatiOH": "2",
+    "DaytonOH": "13",
+    "GrandRapidsMI": "73",
+    "KansasCityMO": "9",
+    "Louisville/JeffersonCountyKY": "65",
+    "Name": "otherIN",
+    "otherIL": "90",
+    "otherKS": "2",
+    "otherKY": "136",
+    "otherMI": "8",
+    "otherMO": "1",
+    "otherSC": "42"
+  },
+  {
+    "AustinTX": "1",
+    "CincinnatiOH": "1",
+    "FortWayneIN": "9",
+    "HoustonTX": "7",
+    "KansasCityMO": "163",
+    "MinneapolisMN": "139",
+    "Name": "otherIA",
+    "NewYorkNY": "4",
+    "OklahomaCityOK": "1",
+    "OmahaNE": "178",
+    "SaltLakeCityUT": "5",
+    "StLouisIL": "2",
+    "TampaFL": "1",
+    "otherGA": "1",
+    "otherIA": "1427",
+    "otherIN": "7",
+    "otherMN": "116",
+    "otherND": "5",
+    "otherNE": "296",
+    "otherSD": "75",
+    "otherTN": "1"
+  },
+  {
+    "Name": "otherKS",
+    "otherAR": "129"
+  },
+  {
+    "BaltimoreMD": "7",
+    "BuffaloNY": "2",
+    "CharlotteNC": "5",
+    "ChicagoIL": "265",
+    "ColumbusOH": "11",
+    "DaytonOH": "85",
+    "FortWayneIN": "10",
+    "GrandRapidsMI": "78",
+    "MinneapolisMN": "2",
+    "MobileAL": "3",
+    "Name": "otherKY",
+    "NewYorkNY": "10",
+    "OrlandoFL": "7",
+    "PhiladelphiaPA": "5",
+    "PittsburghPA": "164",
+    "SaltLakeCityUT": "2",
+    "SeattleWA": "8",
+    "otherIA": "7",
+    "otherID": "3",
+    "otherIL": "9",
+    "otherIN": "201",
+    "otherKY": "1319",
+    "otherMD": "8",
+    "otherMS": "5",
+    "otherOH": "614",
+    "otherVA": "2",
+    "otherWA": "2",
+    "otherWI": "12",
+    "otherWV": "59"
+  },
+  {
+    "MinneapolisMN": "10",
+    "Name": "otherLA",
+    "TulsaOK": "2",
+    "otherLA": "165",
+    "otherMS": "1",
+    "otherTX": "5"
+  },
+  {
+    "BostonMA": "5",
+    "Name": "otherME"
+  },
+  {
+    "Name": "otherMD",
+    "NewYorkNY": "66",
+    "otherMD": "4"
+  },
+  {
+    "BostonMA": "2",
+    "Name": "otherMA",
+    "VirginiaBeachVA": "1",
+    "otherMA": "2"
+  },
+  {
+    "DetroitMI": "118",
+    "GrandRapidsMI": "157",
+    "Name": "otherMI",
+    "PhiladelphiaPA": "13",
+    "SanJoseCA": "5",
+    "otherKY": "6",
+    "otherMI": "487"
+  },
+  {
+    "MinneapolisMN": "219",
+    "Name": "otherMN",
+    "otherIA": "31",
+    "otherSD": "18"
+  },
+  {
+    "AtlantaGA": "63",
+    "BirminghamAL": "19",
+    "CharlestonSC": "1",
+    "GreenvilleSC": "245",
+    "MemphisTN": "91",
+    "Name": "otherMS",
+    "otherIA": "57",
+    "otherKS": "18",
+    "otherMO": "12",
+    "otherMS": "862"
+  },
+  {
+    "ChicagoIL": "4",
+    "IndianapolisIN": "1",
+    "Louisville/JeffersonCountyKY": "20",
+    "MinneapolisMN": "8",
+    "Name": "otherMO",
+    "otherAR": "1026",
+    "otherMS": "1"
+  },
+  {
+    "DenverCO": "6",
+    "FortWayneIN": "1",
+    "LakeCharlesLA": "1",
+    "Name": "otherMT",
+    "RichmondVA": "4",
+    "SaltLakeCityUT": "7",
+    "otherIA": "9",
+    "otherMN": "2"
+  },
+  {
+    "Name": "otherNE",
+    "otherIA": "207"
+  },
+  {
+    "Name": "otherNV"
+  },
+  {
+    "Name": "otherNH"
+  },
+  {
+    "ElPasoTX": "32",
+    "Name": "otherNM",
+    "otherCO": "8"
+  },
+  {
+    "BostonMA": "8",
+    "FortWayneIN": "3",
+    "HartfordCT": "4",
+    "Name": "otherNY",
+    "PittsburghPA": "11",
+    "otherMA": "25",
+    "otherME": "2",
+    "otherNY": "581",
+    "otherPA": "18",
+    "otherVT": "25"
+  },
+  {
+    "BaltimoreMD": "201",
+    "LakeCharlesLA": "1",
+    "Name": "otherNC",
+    "RaleighNC": "122",
+    "otherKY": "23",
+    "otherMA": "33",
+    "otherMD": "131",
+    "otherTN": "1"
+  },
+  {
+    "MinneapolisMN": "5",
+    "Name": "otherND",
+    "otherMT": "3"
+  },
+  {
+    "ChicagoIL": "802",
+    "CincinnatiOH": "89",
+    "ClevelandOH": "142",
+    "ColumbusOH": "436",
+    "GreensboroNC": "1",
+    "IndianapolisIN": "2",
+    "Name": "otherOH",
+    "RichmondVA": "2",
+    "otherIL": "2",
+    "otherMD": "4",
+    "otherMI": "73",
+    "otherNY": "79",
+    "otherWV": "18"
+  },
+  {
+    "DallasTX": "51",
+    "KansasCityMO": "46",
+    "LakeCharlesLA": "1",
+    "Name": "otherOK",
+    "OklahomaCityOK": "54",
+    "otherCO": "2",
+    "otherKS": "49",
+    "otherOK": "4"
+  },
+  {
+    "Name": "otherOR",
+    "SanJoseCA": "14",
+    "SeattleWA": "52"
+  },
+  {
+    "BostonMA": "2",
+    "CharlotteNC": "5",
+    "ChicagoIL": "2",
+    "ColumbusOH": "28",
+    "DetroitMI": "2",
+    "ElPasoTX": "3",
+    "Name": "otherPA",
+    "PhiladelphiaPA": "62",
+    "RichmondVA": "3",
+    "WashingtonDC": "167",
+    "otherCA": "1",
+    "otherNY": "18",
+    "otherWV": "10"
+  },
+  {
+    "CharlestonSC": "1",
+    "GrandRapidsMI": "13",
+    "GreenvilleSC": "49",
+    "Louisville/JeffersonCountyKY": "17",
+    "MiamiFL": "123",
+    "Name": "otherSC",
+    "OrlandoFL": "36",
+    "RaleighNC": "151",
+    "otherGA": "28"
+  },
+  {
+    "Name": "otherSD",
+    "otherWI": "3"
+  },
+  {
+    "GreenvilleSC": "5",
+    "KnoxvilleTN": "66",
+    "LakeCharlesLA": "1",
+    "Name": "otherTN",
+    "NashvilleTN": "294",
+    "NewYorkNY": "236",
+    "otherIL": "6",
+    "otherIN": "17"
+  },
+  {
+    "DallasTX": "107",
+    "ElPasoTX": "89",
+    "Name": "otherTX",
+    "PhiladelphiaPA": "9",
+    "StLouisIL": "4",
+    "otherOK": "32"
+  },
+  {
+    "Name": "otherUT",
+    "otherMT": "6"
+  },
+  {
+    "BostonMA": "1",
+    "LakeCharlesLA": "2",
+    "Name": "otherVT"
+  },
+  {
+    "CharlotteNC": "7",
+    "Name": "otherVA",
+    "NewYorkNY": "11",
+    "PhiladelphiaPA": "12",
+    "WashingtonDC": "62",
+    "otherTN": "29",
+    "otherVA": "505"
+  },
+  {
+    "Name": "otherWA",
+    "SaltLakeCityUT": "3"
+  },
+  {
+    "ColumbusOH": "3",
+    "Name": "otherWV",
+    "NewYorkNY": "467",
+    "otherKY": "30",
+    "otherWV": "86"
+  },
+  {
+    "CincinnatiOH": "8",
+    "GrandRapidsMI": "16",
+    "Louisville/JeffersonCountyKY": "3",
+    "MinneapolisMN": "199",
+    "Name": "otherWI",
+    "otherIA": "27",
+    "otherIL": "60",
+    "otherMI": "43",
+    "otherND": "23",
+    "otherSD": "6",
+    "otherTN": "72",
+    "otherWI": "1903"
+  },
+  {
+    "Name": "otherWY",
+    "otherWY": "1"
+  },
+  {
+    "BaltimoreMD": "215",
+    "Name": "RichmondVA",
+    "PhiladelphiaPA": "8",
+    "VirginiaBeachVA": "86",
+    "WashingtonDC": "557",
+    "otherCT": "61",
+    "otherVA": "167"
+  },
+  {
+    "AlbanyNY": "23",
+    "Name": "RochesterNY"
+  },
+  {
+    "Name": "SacramentoCA",
+    "SanJoseCA": "44",
+    "SeattleWA": "16"
+  },
+  {
+    "DenverCO": "227",
+    "Name": "SaltLakeCityUT",
+    "PortlandOR": "1",
+    "SaltLakeCityUT": "618",
+    "otherCO": "15",
+    "otherID": "170",
+    "otherNV": "31",
+    "otherWY": "33"
+  },
+  {
+    "BeaumontTX": "6",
+    "DallasTX": "110",
+    "LaredoTX": "10",
+    "Name": "SanAntonioTX",
+    "NewYorkNY": "1442",
+    "OklahomaCityOK": "30",
+    "otherIA": "18",
+    "otherNM": "2",
+    "otherTX": "23"
+  },
+  {
+    "Name": "SanDiegoCA"
+  },
+  {
+    "FresnoCA": "34",
+    "Name": "SanJoseCA",
+    "RaleighNC": "3",
+    "SanDiegoCA": "15",
+    "SanJoseCA": "4946",
+    "SeattleWA": "33",
+    "otherCA": "144",
+    "otherID": "2",
+    "otherNV": "72"
+  },
+  {
+    "Name": "SavannahGA",
+    "otherVA": "14"
+  },
+  {
+    "Name": "SeattleWA",
+    "SeattleWA": "1844",
+    "otherAK": "24",
+    "otherID": "39",
+    "otherMT": "180",
+    "otherOR": "1",
+    "otherWA": "225"
+  },
+  {
+    "BeaumontTX": "1",
+    "CincinnatiOH": "4",
+    "DallasTX": "5",
+    "ElPasoTX": "18",
+    "HoustonTX": "6",
+    "Name": "StLouisMO",
+    "PhiladelphiaPA": "1",
+    "StLouisIL": "2094",
+    "WichitaKS": "12",
+    "otherFL": "2",
+    "otherIA": "9",
+    "otherKY": "22",
+    "otherMA": "2",
+    "otherMI": "2",
+    "otherMS": "2",
+    "otherVA": "6"
+  },
+  {
+    "CharlestonSC": "7",
+    "JacksonvilleFL": "10",
+    "Name": "TampaFL",
+    "OrlandoFL": "13",
+    "RaleighNC": "2",
+    "StLouisIL": "5",
+    "otherGA": "2",
+    "otherMI": "44"
+  },
+  {
+    "Name": "TucsonAZ",
+    "PhoenixAZ": "191"
+  },
+  {
+    "DallasTX": "1",
+    "Name": "TulsaOK",
+    "TulsaOK": "17",
+    "WichitaKS": "2",
+    "otherIN": "6",
+    "otherMO": "11"
+  },
+  {
+    "Name": "UrbanHonoluluHI",
+    "UrbanHonoluluHI": "65",
+    "otherHI": "113"
+  },
+  {
+    "BaltimoreMD": "181",
+    "HoustonTX": "144",
+    "Name": "VirginiaBeachVA",
+    "RaleighNC": "3",
+    "StLouisIL": "8",
+    "WashingtonDC": "6",
+    "otherCT": "207",
+    "otherIL": "5",
+    "otherVA": "11"
+  },
+  {
+    "Name": "WashingtonDC",
+    "WashingtonDC": "574",
+    "otherVA": "23"
+  },
+  {
+    "Name": "WichitaKS",
+    "otherKS": "3",
+    "otherMO": "13"
+  }
+]
