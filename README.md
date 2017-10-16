@@ -20,7 +20,7 @@ This was a hackathon project for Science Hack Day San Francisco in 2017. If youâ
 
 Here's the static visualization from Circos. [Circos Raw Data](http://mkweb.bcgsc.ca/tableviewer/).
 
-You can [check out the website for the interactive visualization](http://www.craftbyzen.com/garbage-in-garbage-out/. 
+You can [check out the website for the interactive visualization](http://www.craftbyzen.com/garbage-in-garbage-out/). 
 
 ## Credits
 
