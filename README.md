@@ -1,5 +1,7 @@
 # Garbage In Garbage Out
 
+Science Hack Day SF 2017 Project
+
 ## Introduction
 
 What happens to your city’s trash? Depending on where you live, a surprising amount of it gets shipped to other cities in the USA. In fact, according to the 2012 commodity flow survey taken by the US government, 114 million tons of waste and scrap are shipped per year. And that’s not even counting the trash that gets carried from your house to your local waste facility with garbage trucks. This survey only looked at intentional large scale waste transportation.
@@ -14,17 +16,19 @@ Explore the data by looking at inflows and outflows. Find your city and see wher
 
 This was a hackathon project for Science Hack Day San Francisco in 2017. If you’re excited by this data, fork the github repo and let us know what you create!
 
-## Data
+## Demos
 
-[Circos Raw Data](http://mkweb.bcgsc.ca/tableviewer/)
+Here's the static visualization from Circos. [Circos Raw Data](http://mkweb.bcgsc.ca/tableviewer/).
+
+You can [check out the website for the interactive visualization](http://www.craftbyzen.com/garbage-in-garbage-out/. 
 
 ## Credits
 
 - Anthony B
-- Dan Recht
-- Erin Rapacki
-- Jeremy Wong
-- Joke Durnez
-- Karina van Schaardenburg
-- Liz Pasekal
-- Michael Bonfiglio
+- [Dan Recht](twitter.com/DanielRecht)
+- [Erin Rapacki](twitter.com/RobotDiva)
+- [Jeremy Wong](github.com/jermspeaks)
+- [Joke Durnez](twitter.com/JokeDurnez)
+- [Karina van Schaardenburg](twitter.com/kvanscha)
+- [Liz Pasekal](http://www.lizpasekal.com/)
+- [Michael Bonfiglio](twitter.com/michaelbonbon)
