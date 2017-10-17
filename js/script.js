@@ -1,3 +1,7 @@
+import * as d3 from 'd3';
+import { legendColor, legendSize } from 'd3-svg-legend'
+import * as topojson from 'topojson';
+
 const MAP_COLOR = '#ddd';
 const STATE_BORDER_COLOR = '#fff';
 const SENDING_COLOR = 'rgb(28,145,236)';
@@ -29,7 +33,7 @@ svg.append("g")
   .attr("class", "legendOrdinal")
   .attr("transform", "translate(20,20)");
 
-var legendOrdinal = d3.legendColor()
+var legendOrdinal = legendColor()
   //d3 symbol creates a path-string, for example
   //"M0,-8.059274488676564L9.306048591020996,
   //8.059274488676564 -9.306048591020996,8.059274488676564Z"
@@ -436,7 +440,7 @@ function update(chosenLocation) {
       .attr("class", "legendSizeLine")
       .attr("transform", "translate(0, 500)");
 
-    var legendSizeLine = d3.legendSize()
+    var legendSizeLine = legendSize()
           .scale(lineSize)
           .shape("line")
           .orient("horizontal")

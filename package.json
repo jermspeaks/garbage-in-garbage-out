@@ -4,7 +4,10 @@
   "description": "Looking at the flow of garbage through US cities",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server . -p 8080",
+    "build": "./node_modules/.bin/rollup -c",
+    "build:production": "NODE_ENV=production ./node_modules/.bin/rollup -c"
   },
   "repository": {
     "type": "git",
@@ -16,16 +19,27 @@
     "url": "https://github.com/jermspeaks/garbage-in-garbage-out/issues"
   },
   "homepage": "https://github.com/jermspeaks/garbage-in-garbage-out#readme",
-  "devDependencies": {
-    "request": "^2.83.0"
-  },
   "dependencies": {
     "csv-parse": "^1.2.4",
     "csvtojson": "^1.1.9",
     "d3": "^4.11.0",
-    "d3-legend": "^1.0.0",
+    "d3-svg-legend": "^2.0.0",
+    "http-server": "^0.10.0",
     "queue": "^4.4.1",
     "stream-transform": "^0.1.2",
     "topojson": "^3.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-minify": "^0.2.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-minify": "^0.2.0",
+    "request": "^2.83.0",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-cleanup": "^1.0.1",
+    "rollup-plugin-node-resolve": "^3.0.0"
   }
 }
