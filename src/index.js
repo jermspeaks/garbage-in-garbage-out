@@ -139,15 +139,19 @@ function update(chosenLocation) {
       
       if (!foundSource) {
         var city = locations.find(l => l.name === t.source);
-        var coords = projection([city.longitude, city.latitude]);
-        city.x = coords[0];
-        city.y = coords[1];
-        city.weight = t.weight;
-        city.color = colors.SENDING_COLOR;
+        try {
+          var coords = projection([city.longitude, city.latitude]);
+          city.x = coords[0];
+          city.y = coords[1];
+          city.weight = t.weight;
+          city.color = colors.SENDING_COLOR;
 
-        nodes.push(city);
-        linked.source = city;
-        // linked.coordinates.push([city.longitude, city.latitude]);
+          nodes.push(city);
+          linked.source = city;
+        } catch (error) {
+          console.log('source', t.source, city, error);
+          // linked.coordinates.push([city.longitude, city.latitude]);
+        }
       } else {
         foundSource.weight = t.weight;
         foundSource.color = colors.SENDING_COLOR;
@@ -157,14 +161,18 @@ function update(chosenLocation) {
 
       if (!foundDest) {
         var city = locations.find(l => l.name === t.dest);
-        var coords = projection([city.longitude, city.latitude]);
-        city.x = coords[0];
-        city.y = coords[1];
-        city.weight = t.weight;
-        city.color = colors.SENDING_COLOR;
+        try {
+          var coords = projection([city.longitude, city.latitude]);
+          city.x = coords[0];
+          city.y = coords[1];
+          city.weight = t.weight;
+          city.color = colors.SENDING_COLOR;
 
-        nodes.push(city);
-        linked.target = city; 
+          nodes.push(city);
+          linked.target = city; 
+        } catch (error) {
+          console.log('destination', t.dest, city, error);
+        }
         // linked.coordinates.push([city.longitude, city.latitude]);
       } else {
         // linked.coordinates.push([foundDest.longitude, foundDest.latitude]);
