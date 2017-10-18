@@ -37,6 +37,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-latest": "^6.24.1",
     "babel-preset-minify": "^0.2.0",
+    "prettier": "1.7.4",
     "request": "^2.83.0",
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
