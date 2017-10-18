@@ -328,7 +328,7 @@ function update(chosenLocation) {
       // .attr("r", d => 3)
       .attr("cx", d => d.x)
       .attr("cy", d => d.y)
-      .style("fill", colors.FILL_COLOR)
+      .style("fill", d => d.name === chosenLocation ? colors.SELECTED_CITY_COLOR : colors.FILL_COLOR)
       // .text(d => d.name)
       // .style("opacity", d => d.name === chosenLocation ? '1' : '0')
       .style("stroke", "#252525")
@@ -348,13 +348,13 @@ function update(chosenLocation) {
       .attr("dx", ".5em")
       .attr("dy", "1em")
       .attr("font-size", d => d.name === chosenLocation ? "1em" : fontRange(d.weight) >= 10 ? "1em" : `${fontRange(d.weight) / 10}em`)
+      .attr("fill", d => d.name === chosenLocation ? colors.SELECTED_CITY_COLOR : '#000')
       .text(d => {
         if (d.name.indexOf("other") >= 0) {
           let fullState = stateList.find(
             s => s.abbreviation === d.name.replace(/^other/, "")
           );
           return fullState.name;
-          // return d.name.replace(/^other/, "");
         } else {
           return (
             d.name
