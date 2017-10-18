@@ -351,6 +351,7 @@ function update(chosenLocation) {
       .x(d => d.x)
       .y(d => d.y);
 
+    locationGroup.selectAll("circle").remove(); 
     var locationCircles = locationGroup.selectAll("circle")
       .data(locations, d => d)
 
@@ -414,6 +415,9 @@ function update(chosenLocation) {
       return l;
     });
 
+    // Remove all first
+    lineGraph.selectAll("path").remove();
+    
     //The line SVG Path we draw
     var lines = lineGraph.selectAll("path")
       .data(lineData, d => d);
