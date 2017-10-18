@@ -22,6 +22,20 @@ Here's the static visualization from Circos. [Circos Raw Data](http://mkweb.bcgs
 
 You can [check out the website for the interactive visualization](http://www.craftbyzen.com/garbage-in-garbage-out/). 
 
+## Installation
+
+You can sub [`npm`](npmjs.com) for [`yarn`](yarnpkg.com) if you don't use yarn.
+
+```js
+yarn install
+
+# Watch build
+yarn run build:watch
+
+# Start server
+yarn start
+```
+
 ## Credits
 
 - Anthony B
