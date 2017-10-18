@@ -213,13 +213,12 @@ function update(chosenLocation) {
       var foundSource = nodes.find(n => n.name && n.name === t.source);
       var foundDest = nodes.find(n => n.name && n.name === t.dest);
 
-      console.log("t", t);
       console.log("foundSource", foundSource);
 
       if (!foundSource) {
         var city = locations.find(l => l.name === t.source);
-        console.log("locations", t.source);
-        console.log("city", city);
+        // console.log("locations", t.source);
+        // console.log("city", city);
         var coords = projection([city.longitude, city.latitude]);
         city.x = coords[0];
         city.y = coords[1];
@@ -291,7 +290,9 @@ function update(chosenLocation) {
   function drawData(locations, links) {
     var maxDomainTarget = d3.max(links, l => +l.target.weight);
     var maxDomainSource = d3.max(links, l => +l.source.weight);
-    var maxDomain = maxDomainTarget >= maxDomainSource ? maxDomainTarget : maxDomainSource;
+    var maxDomainWithoutLimit = maxDomainTarget >= maxDomainSource ? maxDomainTarget : maxDomainSource;
+    var maxDomain = maxDomainWithoutLimit <= 100 ? 100 : maxDomainWithoutLimit;
+    console.log('maxDomain', maxDomain);
 
     var radiusRange = d3
       .scaleLinear()
