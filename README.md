@@ -24,7 +24,7 @@ You can [check out the website for the interactive visualization](http://www.cra
 
 ## Installation
 
-You can sub [`npm`](npmjs.com) for [`yarn`](yarnpkg.com) if you don't use yarn.
+You can sub [`npm`](http://npmjs.com) for [`yarn`](http://yarnpkg.com) if you don't use yarn.
 
 ```js
 yarn install
