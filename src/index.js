@@ -43,12 +43,19 @@ function createStates() {
 
     states
       .selectAll("path")
+      // .data(topojson.feature(us, us.objects.states, (a, b) => a !== b && a.id !== "IRL").features)
       .data(topojson.feature(us, us.objects.states).features)
       .enter()
       .append("path")
       .attr("d", path)
+      .attr("class", "subunit-boundary")
       .attr("fill", colors.MAP_COLOR)
       .attr("stroke", colors.STATE_BORDER_COLOR);
+
+    // svg.append("path")
+    //   .data(topojson.feature(us, uk.objects.states, (a, b) => a === b && a.id === "IRL").features)
+    //   .attr("d", path)
+    //   .attr("class", "subunit-boundary IRL");
   });
 }
 
@@ -321,11 +328,20 @@ function update(chosenLocation) {
       .attr("dy", "1em")
       .text(d => {
         if (d.name.indexOf("other") >= 0) {
-          let fullState = stateList.find(s => s.abbreviation === d.name.replace(/^other/, ''));
+          let fullState = stateList.find(
+            s => s.abbreviation === d.name.replace(/^other/, "")
+          );
           return fullState.name;
           // return d.name.replace(/^other/, "");
         } else {
-          return d.name.slice(0, d.name.length - 2);
+          return (
+            d.name
+              .slice(0, d.name.length - 2)
+              // insert a space before all caps
+              .replace(/([A-Z])/g, " $1")
+              // uppercase the first character
+              .replace(/^./, str => str.toUpperCase())
+          );
         }
       })
       .merge(locationText);
