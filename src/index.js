@@ -289,6 +289,25 @@ function update(chosenLocation) {
   }
 
   function drawData(locations, links) {
+    var maxDomainTarget = d3.max(links, l => +l.target.weight);
+    var maxDomainSource = d3.max(links, l => +l.source.weight);
+    var maxDomain = maxDomainTarget >= maxDomainSource ? maxDomainTarget : maxDomainSource;
+
+    var radiusRange = d3
+      .scaleLinear()
+      .domain([0, maxDomain])
+      .range([3, 6]);
+
+    var lineWidthRange = d3
+      .scaleLinear()
+      .domain([0, maxDomain])
+      .range([1, 6]);
+
+    var fontRange = d3
+      .scaleLinear()
+      .domain([0, maxDomain])
+      .range([5, 10]);
+
     var curvedLine = d3
       .line()
       .curve(d3.curveBundle)
@@ -304,7 +323,8 @@ function update(chosenLocation) {
       .enter()
       .append("circle")
       .attr("class", "location")
-      .attr("r", 5)
+      .attr("r", d => radiusRange(d.weight))
+      // .attr("r", d => 3)
       .attr("cx", d => d.x)
       .attr("cy", d => d.y)
       .style("fill", colors.FILL_COLOR)
@@ -326,6 +346,7 @@ function update(chosenLocation) {
       .attr("y", d => d.y)
       .attr("dx", ".5em")
       .attr("dy", "1em")
+      .attr("font-size", d => d.name === chosenLocation ? "1em" : fontRange(d.weight) >= 10 ? "1em" : `${fontRange(d.weight) / 10}em`)
       .text(d => {
         if (d.name.indexOf("other") >= 0) {
           let fullState = stateList.find(
@@ -348,13 +369,6 @@ function update(chosenLocation) {
 
     locationCircles.exit().remove();
     locationText.exit().remove();
-
-    var maxDomain = d3.max(links, l => +l.target.weight);
-
-    var lineWidthRange = d3
-      .scaleLinear()
-      .domain([0, maxDomain])
-      .range([1, 6]);
 
     //This is the accessor function we talked about above
     var lineFunction = d3
