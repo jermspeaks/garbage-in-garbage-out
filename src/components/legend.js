@@ -1,17 +1,17 @@
-import * as d3 from 'd3';
+import { scaleOrdinal, symbol, symbolCircle, scaleLinear, transition } from 'd3';
 import { legendColor, legendSize } from "d3-svg-legend";
 import { createSvgGroup } from "../setup";
 import * as colors from '../constants/colors';
 
 function createScaleOrdinal(list) {
-  return d3.scaleOrdinal()
+  return scaleOrdinal()
     .domain(list)
     .range([colors.SENDING_COLOR, colors.RECEIVING_COLOR]);  
 }
 
 function createOrdinalGenerator(ordinal) {
   return legendColor()
-    .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
+    .shape("path", symbol().type(symbolCircle).size(150)())
     .shapePadding(10)
     //use cellFilter to hide the "e" cell
     .cellFilter(function(d){ return d.label !== "e" })
@@ -29,13 +29,13 @@ function drawColorLegend(svg) {
     .call(legendOrdinal);
 }
 
-const createLineSize = maxDomain => d3.scaleLinear()
+const createLineSize = maxDomain => scaleLinear()
     .domain([0, maxDomain])
     .range([1, 6]);
 
 function drawLinkGuideLegend({ svg, maxDomain }) {
   const lineSize = createLineSize(maxDomain)
-  var t = d3.transition().duration(1000);
+  var t = transition().duration(1000);
 
   var update = svg.select("g.legendSizeLine");
 

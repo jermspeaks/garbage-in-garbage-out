@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+import { geoAlbersUsa, csv, json, queue } from "d3";
 import drawData from "./draw";
 import * as colors from "./constants/colors";
 
@@ -32,12 +32,11 @@ function drawLocation(store) {
   if (store.get("locations")) {
     filterData(store);
   } else {
-    d3
-      .queue()
-      .defer(d3.csv, "data/labels.csv", typeLocation)
-      // .defer(d3.csv, "data/trash.csv")
-      .defer(d3.json, "data/waste-cleaned.json")
-      .defer(d3.json, "data/received-waste.json")
+    queue()
+      .defer(csv, "data/labels.csv", typeLocation)
+      // .defer(csv, "data/trash.csv")
+      .defer(json, "data/waste-cleaned.json")
+      .defer(json, "data/received-waste.json")
       .await(dataCallback);
   }
 }
@@ -107,7 +106,7 @@ function filterData(store) {
     receivedTrashData,
     chosenLocation
   } = store.getStore();
-  const projection = d3.geoAlbersUsa();
+  const projection = geoAlbersUsa();
   const trash = filterTrash(chosenLocation, trashData);
   const rTrash = filterRTrash(chosenLocation, receivedTrashData);
   let nodes = [];

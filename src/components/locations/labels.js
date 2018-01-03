@@ -1,11 +1,10 @@
-import * as d3 from "d3";
+import { scaleLinear, transition, polygonCentroid, voronoi } from "d3";
 import { createSvg, createSvgGroup } from "../../setup";
 import { default as stateList } from "../../stateList";
 import { WIDTH, HEIGHT } from "../../constants/dimensions";
 
 const createFontRange = maxDomain =>
-	d3
-		.scaleLinear()
+	scaleLinear()
 		.domain([0, maxDomain])
 		.range([5, 10]);
 
@@ -25,11 +24,10 @@ export function drawLabels({ data, svg, store, maxDomain }) {
 		svg.select(".locations-label").size() > 0
 			? svg.select(".locations-label")
 			: createSvgGroup(svg, "locations-label", "locations-label");
-	var t = d3.transition().duration(1000);
+	var t = transition().duration(1000);
 	const chosenLocation = store.get("chosenLocation");
 
-	var voronoiInstance = d3
-		.voronoi()
+	var voronoiInstance = voronoi()
 		.extent([[-1, -1], [WIDTH + 1, HEIGHT + 1]]);
 	var cells = voronoiInstance.polygons(noDuplicateData.map(d => [d.x, d.y]));
 
@@ -37,7 +35,7 @@ export function drawLabels({ data, svg, store, maxDomain }) {
 
 	var updatedCells = cells.map(d => Object.assign({}, d, {
 		orient: (function() {
-			var centroid = d3.polygonCentroid(d),
+			var centroid = polygonCentroid(d),
 				point = d.data,
 				angle = Math.round(
 					Math.atan2(centroid[1] - point[1], centroid[0] - point[0]) /
@@ -66,7 +64,7 @@ export function drawLabels({ data, svg, store, maxDomain }) {
 	// 	.enter()
 	// 	.append("text")
 	// 	.attr("class", d => {
-	// 		var centroid = d3.polygonCentroid(d),
+	// 		var centroid = polygonCentroid(d),
 	// 			point = d.data,
 	// 			angle = Math.round(
 	// 				Math.atan2(centroid[1] - point[1], centroid[0] - point[0]) /

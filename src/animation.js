@@ -1,3 +1,5 @@
+import { interpolateString } from "d3";
+
 function lineTransition(path) {
   path.transition()
       //NOTE: Change this number (in ms) to make lines draw faster or slower
@@ -19,7 +21,7 @@ var tweenDash = function tweenDash() {
     //  nice hack that gives us animation along some arbitrary path (in this
     //  case, makes it look like a line is being drawn from point A to B)
     var len = this.getTotalLength(),
-        interpolate = d3.interpolateString("0," + len, len + "," + len);
+        interpolate = interpolateString("0," + len, len + "," + len);
 
     return function(t) { return interpolate(t); };
 };

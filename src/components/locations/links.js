@@ -1,8 +1,9 @@
-import * as d3 from "d3";
+import { line, transition, scaleLinear } from "d3";
+// import { curveBundle } from "d3";
 import { createSvg, createSvgGroup } from "../../setup";
 
 // This is the accessor function we talked about above
-const lineFunction = d3.line()
+const lineFunction = line()
 	.x(function(d) {
 		return d.x;
 	})
@@ -10,12 +11,12 @@ const lineFunction = d3.line()
 		return d.y;
 	});
 
-const createLineWidthRange = maxDomain => d3.scaleLinear()
+const createLineWidthRange = maxDomain => scaleLinear()
 	.domain([0, maxDomain])
 	.range([1, 6]);
 
-// var curvedLine = d3.line()
-// 	.curve(d3.curveBundle)
+// var curvedLine = line()
+// 	.curve(curveBundle)
 // 	.x(d => d.x)
 // 	.y(d => d.y);
 
@@ -31,7 +32,7 @@ export function drawLinks({ data, svg, maxDomain }) {
 		svg.select(".lines").size() > 0
 			? svg.select(".lines")
 			: createSvgGroup(svg, "lines", "lines");
-	const t = d3.transition().duration(1000);
+	const t = transition().duration(1000);
 
 	var nextLineData = data.map(l =>
 		Object.assign({}, l, {

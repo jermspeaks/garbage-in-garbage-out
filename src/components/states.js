@@ -1,14 +1,14 @@
-import * as d3 from "d3";
+import { json, geoPath, geoAlbersUsa} from "d3";
 import { createSvgGroup } from "../setup";
 import * as topojson from "topojson";
 import * as colors from "../constants/colors";
 
 function createStates(svg) {
   const states = createSvgGroup(svg, "states", "states");
-  const projection = d3.geoAlbersUsa();
-  const path = d3.geoPath().projection(projection);
+  const projection = geoAlbersUsa();
+  const path = geoPath().projection(projection);
 
-  d3.json("data/us.json", function(error, us) {
+  json("data/us.json", function(error, us) {
     if (error) throw error;
 
     states

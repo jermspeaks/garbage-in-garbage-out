@@ -1,8 +1,8 @@
-import * as d3 from "d3";
+import { scaleLinear, transition } from "d3";
 import { createSvgGroup } from "../../setup";
 import * as colors from "../../constants/colors";
 
-const createRadiusRange = maxDomain => d3.scaleLinear()
+const createRadiusRange = maxDomain => scaleLinear()
 	.domain([0, maxDomain])
 	.range([1, 6]);
 
@@ -16,7 +16,7 @@ export function drawCircles({ data, svg, maxDomain }) {
 		svg.select(".locations-circles").size() > 0
 			? svg.select(".locations-circles")
 			: createSvgGroup(svg, "locations-circles", "locations-circles");
-	var t = d3.transition().duration(1000);
+	var t = transition().duration(1000);
 
 	var updatedLocations = data.map(l =>
 		Object.assign({}, l, {

@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { select } from 'd3';
 import * as dimensions from './constants/dimensions';
 import * as legend from "./components/legend";
 
@@ -7,7 +7,7 @@ import * as legend from "./components/legend";
  * @return {HTML_Element} <svg> element
  */
 function createSvg(selector) {
-	return d3.select(selector)
+	return select(selector)
 	  .append("svg")
 	    .attr('width', dimensions.WIDTH + dimensions.MARGIN.left + dimensions.MARGIN.right)
 	    .attr('height', dimensions.HEIGHT + dimensions.MARGIN.top + dimensions.MARGIN.bottom)
@@ -31,7 +31,7 @@ function createSvgGroup(svg, className, id) {
 
 function responsivefy(svg) {
   // get container + svg aspect ratio
-  var container = d3.select(svg.node().parentNode),
+  var container = select(svg.node().parentNode),
       width = parseInt(svg.style("width")),
       height = parseInt(svg.style("height")),
       aspect = width / height;
@@ -46,7 +46,7 @@ function responsivefy(svg) {
   // you need to add namespace, i.e., 'click.foo'
   // necessary if you call invoke this function for multiple svgs
   // api docs: https://github.com/mbostock/d3/wiki/Selections#on
-  d3.select(window).on("resize." + container.attr("id"), resize);
+  select(window).on("resize." + container.attr("id"), resize);
 
   // get width of container and resize svg to fit it
   function resize() {
