@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { legendColor } from 'd3-svg-legend'
+import { legendColor, legendSize } from "d3-svg-legend";
 import { createSvgGroup } from "../setup";
 import * as colors from '../constants/colors';
 
@@ -18,7 +18,7 @@ function createOrdinalGenerator(ordinal) {
     .scale(ordinal);
 }
 
-function createColorLegend(svg) {
+function drawColorLegend(svg) {
   const colorLineLegend = createSvgGroup(svg, "color-legend", "color-legend");
 
   const ordinal = createScaleOrdinal(["SENT", "RECEIVED"]);
@@ -29,4 +29,50 @@ function createColorLegend(svg) {
     .call(legendOrdinal);
 }
 
-export default createColorLegend;
+const createLineSize = maxDomain => d3.scaleLinear()
+    .domain([0, maxDomain])
+    .range([1, 6]);
+
+function drawLinkGuideLegend({ svg, maxDomain }) {
+  const lineSize = createLineSize(maxDomain)
+  var t = d3.transition().duration(1000);
+
+  var update = svg.select("g.legendSizeLine");
+
+  // Only remove if exists
+  if (update.size() > 0) {
+    update
+      // .transition(t)
+      // .attr("opacity", 0)
+      .remove();
+  }
+
+  // Create New Legend
+  svg
+    .append("g")
+    .attr("class", "legendSizeLine")
+    .attr("transform", "translate(0, 500)");
+  // .attr("opacity", 0)
+  // .transition(t)
+  // .delay(1000)
+  // .attr("opacity", 1);
+
+  var legendSizeLine = legendSize()
+    .scale(lineSize)
+    .shape("line")
+    .orient("horizontal")
+    //otherwise labels would have displayed:
+    // 0, 2.5, 5, 10
+    // .labels(["tiny testing at the beginning", "small", "medium", "large", "grand, all the way long label"])
+    .labelWrap(30)
+    .shapeWidth(40)
+    .labelAlign("start")
+    .shapePadding(10);
+
+  svg.select(".legendSizeLine").call(legendSizeLine);
+}
+
+export {
+  drawColorLegend,
+  drawLinkGuideLegend
+};

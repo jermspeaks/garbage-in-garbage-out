@@ -1,6 +1,6 @@
 import Store from "./Store";
-import createStates from './components/states';
-import createColorLegend from './components/legend';
+import drawStates from './components/states';
+import { drawColorLegend } from './components/legend';
 import drawLocation from './fetchData';
 import { createSvg } from "./setup";
 
@@ -9,8 +9,8 @@ const store = new Store();
 
 store.set('svg', svg);
 
-createColorLegend(svg);
-createStates(svg);  
+drawColorLegend(svg);
+drawStates(svg);  
 
 var selector = document.getElementById("select-location");
 

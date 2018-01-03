@@ -27,12 +27,11 @@ function drawLocation(chosenLocation, store) {
 
   // Grab from cache. Otherwise get from server
   if (store.get("locations")) {
-    filterData(
-      null,
-      store.get("locations"),
-      store.get("trashData"),
-      store.get("receivedTrashData")
-    );
+    filterData({
+      locations: store.get("locations"),
+      trashData: store.get("trashData"),
+      receivedTrashData: store.get("receivedTrashData")
+    });
   } else {
     d3
       .queue()
@@ -40,7 +39,7 @@ function drawLocation(chosenLocation, store) {
       // .defer(d3.csv, "data/trash.csv")
       .defer(d3.json, "data/waste-cleaned.json")
       .defer(d3.json, "data/received-waste.json")
-      .await(filterData);
+      .await(dataCallback);
   }
 }
 
@@ -84,7 +83,7 @@ function filterRTrash(source, trashData) {
   return final;
 }
 
-function filterData(error, locations, trashData, receivedTrashData) {
+function dataCallback(error, locations, trashData, receivedTrashData) {
   if (error) {
     console.error(error);
     return;
@@ -97,6 +96,10 @@ function filterData(error, locations, trashData, receivedTrashData) {
     _store.set("receivedTrashData", receivedTrashData);
   }
 
+  filterData({ locations, trashData, receivedTrashData })
+}
+
+function filterData({ locations, trashData, receivedTrashData }) {
   var projection = d3.geoAlbersUsa();
   var chosenLocation = _store.get('chosenLocation');
   // console.log('locations', typeof locations);
@@ -253,7 +256,7 @@ function filterData(error, locations, trashData, receivedTrashData) {
 
   // console.log("locations", nodes, links);
 
-  drawData(nodes, links, _store);
+  drawData({ nodes, links, store: _store });
 }
 
 export default drawLocation;
