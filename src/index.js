@@ -384,11 +384,9 @@ function update(chosenLocation) {
       .attr("stroke-width", 0)
       .attr("fill", "none")
       .transition(t)
+      .delay(update.exit().size() ? 1000 : 0)
       .attr("stroke", d => d.target.color)
       .attr("stroke-width", d => settings.lineWidthRange(+d.target.weight) + "px");
-      // .merge(lines);
-
-    // lines.exit().remove();
   }
 
   function drawLegend(settings) {
