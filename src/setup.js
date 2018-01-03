@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import * as dimensions from './constants/dimensions';
+import * as legend from "./components/legend";
 
 /**
  * Creates SVG
@@ -55,8 +56,19 @@ function responsivefy(svg) {
   }
 }
 
+function createColorLegend(svg) {
+  const colorLineLegend = createSvgGroup(svg, "color-legend", "color-legend");
+
+  const ordinal = legend.createScaleOrdinal(["SENT", "RECEIVED"]);
+  const legendOrdinal = legend.createOrdinalGenerator(ordinal);
+
+  return colorLineLegend
+    .attr("transform", "translate(20,20)")
+    .call(legendOrdinal);
+}
 
 export {
 	createSvg,
-	createSvgGroup
+	createSvgGroup,
+  createColorLegend
 };
