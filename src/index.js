@@ -17,5 +17,7 @@ var selector = document.getElementById("select-location");
 selector.onchange = evt => {
   var chosenLocation = evt.target.value;
 
-  drawLocation(chosenLocation, store);
+  store.set('chosenLocation', chosenLocation);
+
+  drawLocation(store);
 };

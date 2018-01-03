@@ -1,3 +1,6 @@
+/** 
+ * @class Store
+ */
 class Store {
 	constructor() {
 		this.store = {};
@@ -10,6 +13,10 @@ class Store {
 	set(name, value) {
 		this.store[name] = value;
 		return this.store[name];
+	}
+
+	getStore() {
+		return this.store;
 	}
 }
 

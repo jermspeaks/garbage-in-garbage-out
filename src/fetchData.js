@@ -1,8 +1,14 @@
 import * as d3 from "d3";
-import drawData from './draw';
+import drawData from "./draw";
 import * as colors from "./constants/colors";
 
+/**
+ * @var {Store} Instance of store cache
+ */
 var _store;
+
+const getStore = () => _store;
+const setStore = store => _store = store;
 
 /*
  * see airports.csv
@@ -17,21 +23,14 @@ function typeLocation(d) {
 
 /**
  * Fetches data for the chart
- * @param  {[type]} chosenLocation [description]
- * @param  {[type]} store          [description]
- * @return {[type]}                [description]
+ * @param  {Store} store  Cache storage for all data
  */
-function drawLocation(chosenLocation, store) {
-  _store = store;
-  store.set('chosenLocation', chosenLocation);
+function drawLocation(store) {
+  setStore(store);
 
   // Grab from cache. Otherwise get from server
   if (store.get("locations")) {
-    filterData({
-      locations: store.get("locations"),
-      trashData: store.get("trashData"),
-      receivedTrashData: store.get("receivedTrashData")
-    });
+    filterData(store);
   } else {
     d3
       .queue()
@@ -89,28 +88,39 @@ function dataCallback(error, locations, trashData, receivedTrashData) {
     return;
   }
 
+  var store = getStore();
+
   // Save data in cache
-  if (!_store.get("locations")) {
-    _store.set("locations", locations);
-    _store.set("trashData", trashData);
-    _store.set("receivedTrashData", receivedTrashData);
+  if (!store.get("locations")) {
+    store.set("locations", locations);
+    store.set("trashData", trashData);
+    store.set("receivedTrashData", receivedTrashData);
   }
 
-  filterData({ locations, trashData, receivedTrashData })
+  filterData(store);
 }
 
-function filterData({ locations, trashData, receivedTrashData }) {
-  var projection = d3.geoAlbersUsa();
-  var chosenLocation = _store.get('chosenLocation');
+function filterData(store) {
+  const {
+    locations,
+    trashData,
+    receivedTrashData,
+    chosenLocation
+  } = store.getStore();
+  // const locations = store.get("locations");
+  // const trashData = store.get("trashData");
+  // const receivedTrashData = store.get("receivedTrashData");
+  const projection = d3.geoAlbersUsa();
+  // const chosenLocation = store.get("chosenLocation");
+  const trash = filterTrash(chosenLocation, trashData);
+  const rTrash = filterRTrash(chosenLocation, receivedTrashData);
+  let nodes = [];
+  let links = [];
   // console.log('locations', typeof locations);
   // console.log('trashData', typeof trashData);
   // console.log('receivedTrashData', typeof receivedTrashData);
-  var trash = filterTrash(chosenLocation, trashData);
-  var rTrash = filterRTrash(chosenLocation, receivedTrashData);
   // console.log("sent trash", trash);
   // console.log("received trash", rTrash);
-  var nodes = [];
-  var links = [];
 
   trash.forEach(t => {
     // --- Add paths
@@ -256,7 +266,7 @@ function filterData({ locations, trashData, receivedTrashData }) {
 
   // console.log("locations", nodes, links);
 
-  drawData({ nodes, links, store: _store });
+  drawData({ nodes, links, store });
 }
 
 export default drawLocation;
