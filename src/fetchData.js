@@ -107,11 +107,7 @@ function filterData(store) {
     receivedTrashData,
     chosenLocation
   } = store.getStore();
-  // const locations = store.get("locations");
-  // const trashData = store.get("trashData");
-  // const receivedTrashData = store.get("receivedTrashData");
   const projection = d3.geoAlbersUsa();
-  // const chosenLocation = store.get("chosenLocation");
   const trash = filterTrash(chosenLocation, trashData);
   const rTrash = filterRTrash(chosenLocation, receivedTrashData);
   let nodes = [];
@@ -237,34 +233,6 @@ function filterData(store) {
 
     links.push(linked);
   });
-
-  // var byName = d3.map(locations, function(d) { return d.name; });
-  // console.log("Loaded " + byName.size() + " locations.");
-
-  // // function to sort airports by degree
-  // var bydegree = function(a, b) {
-  //   return d3.descending(a.degree, b.degree);
-  // };
-
-  // // sort remaining airports by degree
-  // locations.sort(bydegree);
-
-  // locations = locations.slice(0, 20);
-
-  // calculate projected x, y pixel locations
-  // locations = locations.map(d => {
-  //   var coords = projection([d.longitude, d.latitude]);
-  //   d.x = coords[0];
-  //   d.y = coords[1];
-  //   return d;
-  // })
-  // nodes.forEach(function(d) {
-  //   var coords = projection([d.longitude, d.latitude]);
-  //   d.x = coords[0];
-  //   d.y = coords[1];
-  // });
-
-  // console.log("locations", nodes, links);
 
   drawData({ nodes, links, store });
 }
