@@ -51,7 +51,8 @@ export function drawLinks({ data, svg, maxDomain }) {
 	update
 		.transition(t)
 		.delay(1000)
-		.attr("stroke-width", d => d.strokeWidth);
+		.attr("stroke-width", d => d.strokeWidth)
+		.attr("stroke", d => d.target.color);
 
 	update
 		.enter()
