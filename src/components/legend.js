@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import { legendColor } from 'd3-svg-legend'
+import { createSvgGroup } from "../setup";
 import * as colors from '../constants/colors';
 
 function createScaleOrdinal(list) {
@@ -17,7 +18,15 @@ function createOrdinalGenerator(ordinal) {
     .scale(ordinal);
 }
 
-export {
-  createScaleOrdinal,
-  createOrdinalGenerator
+function createColorLegend(svg) {
+  const colorLineLegend = createSvgGroup(svg, "color-legend", "color-legend");
+
+  const ordinal = createScaleOrdinal(["SENT", "RECEIVED"]);
+  const legendOrdinal = createOrdinalGenerator(ordinal);
+
+  return colorLineLegend
+    .attr("transform", "translate(20,20)")
+    .call(legendOrdinal);
 }
+
+export default createColorLegend;

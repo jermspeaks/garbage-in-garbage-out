@@ -56,17 +56,6 @@ function responsivefy(svg) {
   }
 }
 
-function createColorLegend(svg) {
-  const colorLineLegend = createSvgGroup(svg, "color-legend", "color-legend");
-
-  const ordinal = legend.createScaleOrdinal(["SENT", "RECEIVED"]);
-  const legendOrdinal = legend.createOrdinalGenerator(ordinal);
-
-  return colorLineLegend
-    .attr("transform", "translate(20,20)")
-    .call(legendOrdinal);
-}
-
 export {
 	createSvg,
 	createSvgGroup,
