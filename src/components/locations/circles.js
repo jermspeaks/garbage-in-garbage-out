@@ -4,7 +4,7 @@ import * as colors from "../../constants/colors";
 
 const createRadiusRange = maxDomain => d3.scaleLinear()
 	.domain([0, maxDomain])
-	.range([3, 6]);
+	.range([1, 6]);
 
 export function drawCircles({ data, svg, maxDomain }) {
 	if (!svg) {
