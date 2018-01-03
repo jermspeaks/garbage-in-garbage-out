@@ -349,7 +349,6 @@ function update(chosenLocation) {
             s => s.abbreviation === d.name.replace(/^other/, "")
           );
           return fullState.name;
-          // return d.name.replace(/^other/, "");
         } else {
           return (
             d.name
