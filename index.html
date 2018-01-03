@@ -8,6 +8,20 @@
             text-align: center;
             font-family: sans-serif;
         }
+
+        .chart {
+            /*background: lightgray;*/
+            max-width: 1024px;
+            text-align: center;
+            border: 1px solid black;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        rect {
+            /*fill: steelblue;*/
+        }
+
         /*.states :hover {
         fill: red;
         }*/
@@ -36,8 +50,10 @@
     </head>
     <body>
         <header>
-            <h1>GARBAGE IN</h1>
-            <h1>GARBAGE OUT</h1>
+            <h1>
+                <div>GARBAGE IN</div>
+                <div>GARBAGE OUT</div>
+            </h1>
         </header>
         <section>
             <a href="https://github.com/jermspeaks/garbage-in-garbage-out" target="_blank">
@@ -179,6 +195,7 @@
                 <option value="otherWY">Rest of Wyoming</option>
             </select>
         </section>
+        <div class="chart"></div>
         <script src="js/script.min.js"> </script>
         <section>
             <h2>How to read this chart</h2>

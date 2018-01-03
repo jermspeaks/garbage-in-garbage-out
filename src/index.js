@@ -1,23 +1,19 @@
 import * as d3 from "d3";
-import { legendColor, legendSize } from "d3-svg-legend";
-import * as topojson from "topojson";
 import * as colors from "./constants/colors";
-import * as setup from "./setup";
 import * as legend from "./components/legend";
+import * as topojson from "topojson";
+import { createSvg, createSvgGroup } from "./setup";
 import { default as stateList } from "./stateList";
+import { legendColor, legendSize } from "d3-svg-legend";
 
-const svg = setup.createSvg();
-const states = setup.createSvgGroup(svg, "states", "states");
-const plot = setup.createSvgGroup(svg, "plot", "plot");
-const lineGraph = setup.createSvgGroup(svg, "lines", "lines");
-const locationGroup = setup.createSvgGroup(svg, "locations", "locations");
+const svg = createSvg(".chart");
+const states = createSvgGroup(svg, "states", "states");
+const plot = createSvgGroup(svg, "plot", "plot");
+const lineGraph = createSvgGroup(svg, "lines", "lines");
+const locationGroup = createSvgGroup(svg, "locations", "locations");
 
 function createColorLegend() {
-  const colorLineLegend = setup.createSvgGroup(
-    svg,
-    "color-legend",
-    "color-legend"
-  );
+  const colorLineLegend = createSvgGroup(svg, "color-legend", "color-legend");
 
   const ordinal = legend.createScaleOrdinal(["SENT", "RECEIVED"]);
   const legendOrdinal = legend.createOrdinalGenerator(ordinal);
@@ -135,8 +131,8 @@ function update(chosenLocation) {
     // console.log('receivedTrashData', typeof receivedTrashData);
     var trash = filterTrash(chosenLocation, trashData);
     var rTrash = filterRTrash(chosenLocation, receivedTrashData);
-    console.log("sent trash", trash);
-    console.log("received trash", rTrash);
+    // console.log("sent trash", trash);
+    // console.log("received trash", rTrash);
     var nodes = [];
     var links = [];
 
@@ -165,7 +161,7 @@ function update(chosenLocation) {
           nodes.push(city);
           linked.source = city;
         } catch (error) {
-          console.log("source", t.source, city, error);
+          // console.log("source", t.source, city, error);
           // linked.coordinates.push([city.longitude, city.latitude]);
         }
       } else {
@@ -187,7 +183,7 @@ function update(chosenLocation) {
           nodes.push(city);
           linked.target = city;
         } catch (error) {
-          console.log("destination", t.dest, city, error);
+          // console.log("destination", t.dest, city, error);
         }
         // linked.coordinates.push([city.longitude, city.latitude]);
       } else {
@@ -213,7 +209,7 @@ function update(chosenLocation) {
       var foundSource = nodes.find(n => n.name && n.name === t.source);
       var foundDest = nodes.find(n => n.name && n.name === t.dest);
 
-      console.log("foundSource", foundSource);
+      // console.log("foundSource", foundSource);
 
       if (!foundSource) {
         var city = locations.find(l => l.name === t.source);
@@ -282,17 +278,167 @@ function update(chosenLocation) {
     //   d.y = coords[1];
     // });
 
-    console.log("locations", nodes, links);
+    // console.log("locations", nodes, links);
 
     drawData(nodes, links);
+  }
+
+  function drawLocationCircles(locations, settings) {
+    var t = d3.transition().duration(1000);
+    // console.log('drawLocationCircles', locations);
+
+    var update = locationGroup.selectAll('circle')
+      .data(locations, d => d.name);
+
+    // Remove old circles
+    update.exit()
+      .transition(t)
+      .attr("r", 0)
+      .remove();
+
+    // Add new circles in
+    update
+      .enter()
+      .append('circle')
+      .attr("class", "location")
+      .attr("r", 0)
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .style("fill", colors.FILL_COLOR)
+      .style("stroke", "#252525")
+      .transition(t)
+      .delay(update.exit().size() ? 1000 : 0)
+      .attr("r", d => settings.radiusRange(d.weight));
+  }
+
+  function drawLocationText(locations, settings) {
+    var t = d3.transition().duration(1000);
+
+    var update = locationGroup.selectAll('text')
+      .data(locations, d => d.name);
+
+    // Remove old circles
+    update.exit()
+      .transition(t)
+      .attr("font-size", "0.1em")
+      .remove();
+
+    update
+      .enter()
+      .append("text")
+      .attr("class", "location-text")
+      .attr("x", d => d.x)
+      .attr("y", d => d.y)
+      .attr("dx", ".5em")
+      .attr("dy", "1em")
+      .attr("font-size", "0.1em")
+      .transition(t)
+      .delay(update.exit().size() ? 1000 : 0)
+      .attr(
+        "font-size",
+        d =>
+          d.name === chosenLocation
+            ? "1em"
+            : settings.fontRange(d.weight) >= 10
+              ? "1em"
+              : `${settings.fontRange(d.weight) / 10}em`
+      )
+      .text(d => {
+        if (d.name.indexOf("other") >= 0) {
+          let fullState = stateList.find(
+            s => s.abbreviation === d.name.replace(/^other/, "")
+          );
+          return fullState.name;
+          // return d.name.replace(/^other/, "");
+        } else {
+          return (
+            d.name
+              .slice(0, d.name.length - 2)
+              // insert a space before all caps
+              .replace(/([A-Z])/g, " $1")
+              // uppercase the first character
+              .replace(/^./, str => str.toUpperCase())
+          );
+        }
+      });
+  }
+
+  function drawBetweenLines(lineData, settings) {
+    var t = d3.transition().duration(1000);
+
+    console.log('lineData', lineData);
+
+    // The line SVG Path we draw
+    var update = lineGraph
+      .selectAll("path")
+      .data(lineData, d => d.name);
+
+    update.exit()
+      .transition(t)
+      .attr("stroke-width", 0)
+      .remove();
+
+    update
+      .enter()
+      .append("path")
+      .attr("d", d => settings.lineFunction(d.lineData))
+      .attr("stroke-width", 0)
+      .attr("fill", "none")
+      .transition(t)
+      .attr("stroke", d => d.target.color)
+      .attr("stroke-width", d => settings.lineWidthRange(+d.target.weight) + "px");
+      // .merge(lines);
+
+    // lines.exit().remove();
+  }
+
+  function drawLegend(settings) {
+    var t = d3.transition().duration(1000);
+
+    console.log('drawLegend');
+
+    var update = svg.select("g.legendSizeLine");
+
+    // Only remove if exists
+    if (update.size() > 0) {
+      update
+        // .transition(t)
+        // .attr("opacity", 0)
+        .remove();  
+    }
+
+    // Create New Legend
+    svg
+      .append("g")
+      .attr("class", "legendSizeLine")
+      .attr("transform", "translate(0, 500)");
+      // .attr("opacity", 0)
+      // .transition(t)
+      // .delay(1000)
+      // .attr("opacity", 1);
+      
+    var legendSizeLine = legendSize()
+      .scale(settings.lineSize)
+      .shape("line")
+      .orient("horizontal")
+      //otherwise labels would have displayed:
+      // 0, 2.5, 5, 10
+      // .labels(["tiny testing at the beginning", "small", "medium", "large", "grand, all the way long label"])
+      .labelWrap(30)
+      .shapeWidth(40)
+      .labelAlign("start")
+      .shapePadding(10);
+
+    svg.select(".legendSizeLine")
+      .call(legendSizeLine);
   }
 
   function drawData(locations, links) {
     var maxDomainTarget = d3.max(links, l => +l.target.weight);
     var maxDomainSource = d3.max(links, l => +l.source.weight);
-    var maxDomainWithoutLimit = maxDomainTarget >= maxDomainSource ? maxDomainTarget : maxDomainSource;
+    var maxDomainWithoutLimit =
+      maxDomainTarget >= maxDomainSource ? maxDomainTarget : maxDomainSource;
     var maxDomain = maxDomainWithoutLimit <= 100 ? 100 : maxDomainWithoutLimit;
-    console.log('maxDomain', maxDomain);
 
     var radiusRange = d3
       .scaleLinear()
@@ -315,62 +461,6 @@ function update(chosenLocation) {
       .x(d => d.x)
       .y(d => d.y);
 
-    var locationCircles = locationGroup
-      .selectAll("circle")
-      .remove()
-      .data(locations, d => d);
-
-    locationCircles
-      .enter()
-      .append("circle")
-      .attr("class", "location")
-      .attr("r", d => radiusRange(d.weight))
-      // .attr("r", d => 3)
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y)
-      .style("fill", colors.FILL_COLOR)
-      // .text(d => d.name)
-      // .style("opacity", d => d.name === chosenLocation ? '1' : '0')
-      .style("stroke", "#252525")
-      .merge(locationCircles);
-
-    var locationText = locationGroup
-      .selectAll("text")
-      .remove()
-      .data(locations, d => d);
-
-    locationText
-      .enter()
-      .append("text")
-      .attr("class", "location-text")
-      .attr("x", d => d.x)
-      .attr("y", d => d.y)
-      .attr("dx", ".5em")
-      .attr("dy", "1em")
-      .attr("font-size", d => d.name === chosenLocation ? "1em" : fontRange(d.weight) >= 10 ? "1em" : `${fontRange(d.weight) / 10}em`)
-      .text(d => {
-        if (d.name.indexOf("other") >= 0) {
-          let fullState = stateList.find(
-            s => s.abbreviation === d.name.replace(/^other/, "")
-          );
-          return fullState.name;
-          // return d.name.replace(/^other/, "");
-        } else {
-          return (
-            d.name
-              .slice(0, d.name.length - 2)
-              // insert a space before all caps
-              .replace(/([A-Z])/g, " $1")
-              // uppercase the first character
-              .replace(/^./, str => str.toUpperCase())
-          );
-        }
-      })
-      .merge(locationText);
-
-    locationCircles.exit().remove();
-    locationText.exit().remove();
-
     //This is the accessor function we talked about above
     var lineFunction = d3
       .line()
@@ -380,12 +470,6 @@ function update(chosenLocation) {
       .y(function(d) {
         return d.y;
       });
-
-    //The data for our line
-    // var lineData = [
-    //   { "x": 1,   "y": 5},
-    //   { "x": 20,  "y": 200}
-    // ];
 
     var lineData = links.map(l => {
       l.lineData = [
@@ -401,50 +485,29 @@ function update(chosenLocation) {
         }
       ];
 
+      l.name = `${l.source.name}_${l.target.name}`;
+
       return l;
     });
-
-    //The line SVG Path we draw
-    var lines = lineGraph
-      .selectAll("path")
-      .remove()
-      .data(lineData, d => d);
-
-    lines
-      .enter()
-      .append("path")
-      .attr("d", d => lineFunction(d.lineData))
-      .attr("stroke", d => d.target.color)
-      .attr("stroke-width", d => lineWidthRange(+d.target.weight) + "px")
-      .attr("fill", "none")
-      .merge(lines);
-
-    lines.exit().remove();
 
     var lineSize = d3
       .scaleLinear()
       .domain([0, maxDomain])
       .range([1, 6]);
 
-    svg.select("g.legendSizeLine").remove();
+    var settings = {
+      maxDomain,
+      radiusRange,
+      lineWidthRange,
+      fontRange,
+      curvedLine,
+      lineFunction,
+      lineSize
+    };
 
-    svg
-      .append("g")
-      .attr("class", "legendSizeLine")
-      .attr("transform", "translate(0, 500)");
-
-    var legendSizeLine = legendSize()
-      .scale(lineSize)
-      .shape("line")
-      .orient("horizontal")
-      //otherwise labels would have displayed:
-      // 0, 2.5, 5, 10
-      // .labels(["tiny testing at the beginning", "small", "medium", "large", "grand, all the way long label"])
-      .labelWrap(30)
-      .shapeWidth(40)
-      .labelAlign("start")
-      .shapePadding(10);
-
-    svg.select(".legendSizeLine").call(legendSizeLine);
+    drawLocationCircles(locations, settings);
+    drawLocationText(locations, settings);
+    drawBetweenLines(lineData, settings);
+    drawLegend(settings)
   }
 }
