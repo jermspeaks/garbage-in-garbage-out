@@ -21,7 +21,7 @@ function createOrdinalGenerator(ordinal) {
 function drawColorLegend(svg) {
   const colorLineLegend = createSvgGroup(svg, "color-legend", "color-legend");
 
-  const ordinal = createScaleOrdinal(["SENT", "RECEIVED"]);
+  const ordinal = createScaleOrdinal(["OUTGOING", "INCOMING"]);
   const legendOrdinal = createOrdinalGenerator(ordinal);
 
   return colorLineLegend
