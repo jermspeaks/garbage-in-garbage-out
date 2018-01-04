@@ -8,7 +8,7 @@ import * as colors from "./constants/colors";
 var _store;
 
 const getStore = () => _store;
-const setStore = store => _store = store;
+const setStore = store => (_store = store);
 
 /*
  * see airports.csv
@@ -22,24 +22,60 @@ function typeLocation(d) {
 }
 
 /**
- * Fetches data for the chart
- * @param  {Store} store  Cache storage for all data
+ * Gets the data source
+ * @param  {[type]} store [description]
+ * @return {[type]}       [description]
  */
-function drawLocation(store) {
-  setStore(store);
+function getDataSource(store) {
+  return new Promise((resolve, reject) => {
+    setStore(store);
 
-  // Grab from cache. Otherwise get from server
-  if (store.get("locations")) {
-    filterData(store);
-  } else {
-    queue()
-      .defer(csv, "data/labels.csv", typeLocation)
-      // .defer(csv, "data/trash.csv")
-      .defer(json, "data/waste-cleaned.json")
-      .defer(json, "data/received-waste.json")
-      .await(dataCallback);
-  }
+    const saveData = (error, locations, trashData, receivedTrashData) => {
+      if (error) {
+        reject(error);
+      }
+
+      // Save data in cache
+      store.set("locations", locations);
+      store.set("trashData", trashData);
+      store.set("receivedTrashData", receivedTrashData);
+
+      resolve();
+    };
+
+    // Grab from cache. Otherwise get from server
+    if (store.get("locations")) {
+      resolve();
+    } else {
+      queue()
+        .defer(csv, "data/labels.csv", typeLocation)
+        // .defer(csv, "data/trash.csv")
+        .defer(json, "data/waste-cleaned.json")
+        .defer(json, "data/received-waste.json")
+        .await(saveData);
+    }
+  });
 }
+
+// /**
+//  * Fetches data for the chart
+//  * @param  {Store} store  Cache storage for all data
+//  */
+// function drawLocation(store) {
+//   setStore(store);
+
+//   // Grab from cache. Otherwise get from server
+//   if (store.get("locations")) {
+//     filterData(store);
+//   } else {
+//     queue()
+//       .defer(csv, "data/labels.csv", typeLocation)
+//       // .defer(csv, "data/trash.csv")
+//       .defer(json, "data/waste-cleaned.json")
+//       .defer(json, "data/received-waste.json")
+//       .await(dataCallback);
+//   }
+// }
 
 function filterTrash(source, trashData) {
   // const source = "AlbanyNY";
@@ -81,23 +117,23 @@ function filterRTrash(source, trashData) {
   return final;
 }
 
-function dataCallback(error, locations, trashData, receivedTrashData) {
-  if (error) {
-    console.error(error);
-    return;
-  }
+// function dataCallback(error, locations, trashData, receivedTrashData) {
+//   if (error) {
+//     console.error(error);
+//     return;
+//   }
 
-  var store = getStore();
+//   var store = getStore();
 
-  // Save data in cache
-  if (!store.get("locations")) {
-    store.set("locations", locations);
-    store.set("trashData", trashData);
-    store.set("receivedTrashData", receivedTrashData);
-  }
+//   // Save data in cache
+//   if (!store.get("locations")) {
+//     store.set("locations", locations);
+//     store.set("trashData", trashData);
+//     store.set("receivedTrashData", receivedTrashData);
+//   }
 
-  filterData(store);
-}
+//   filterData(store);
+// }
 
 function filterData(store) {
   const {
@@ -233,7 +269,11 @@ function filterData(store) {
     links.push(linked);
   });
 
-  drawData({ nodes, links, store });
+  // Cache results
+  store.set('nodes', nodes);
+  store.set('links', links);
+
+  drawData(store);
 }
 
-export default drawLocation;
+export { drawLocation, getDataSource, filterData };

@@ -6,14 +6,19 @@ import * as legend from "./components/legend";
  * Creates SVG
  * @return {HTML_Element} <svg> element
  */
-function createSvg(selector) {
+function createSvg(selector, settings = {}) {
+  const {
+    WIDTH, HEIGHT, MARGIN
+  } = Object.assign({}, dimensions, settings);
+
 	return select(selector)
 	  .append("svg")
-	    .attr('width', dimensions.WIDTH + dimensions.MARGIN.left + dimensions.MARGIN.right)
-	    .attr('height', dimensions.HEIGHT + dimensions.MARGIN.top + dimensions.MARGIN.bottom)
+	    .attr('width', WIDTH + MARGIN.left + MARGIN.right)
+	    .attr('height', HEIGHT + MARGIN.top + MARGIN.bottom)
+      .attr('class', settings.className || undefined)
 	    .call(responsivefy)
 	  .append('g')
-	    .attr('transform', `translate(${dimensions.MARGIN.left}, ${dimensions.MARGIN.top})`);
+	    .attr('transform', `translate(${MARGIN.left}, ${MARGIN.top})`);
 }
 
 /**

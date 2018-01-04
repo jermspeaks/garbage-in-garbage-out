@@ -3,8 +3,10 @@ import { drawLinks, drawCircles, drawLabels } from "./components/locations";
 import { drawLinkGuideLegend } from "./components/legend";
 import { parseLinks } from "./parser";
 
-function drawData({ nodes, links, store }) {
+function drawData(store) {
 	const svg = store.get('svg');
+	const nodes = store.get('nodes');
+	const links = store.get('links');
 	const maxDomainTarget = max(links, l => +l.target.weight);
 	const maxDomainSource = max(links, l => +l.source.weight);
 	const maxDomainWithoutLimit =

@@ -96,6 +96,17 @@
         .location-label--left {
           text-anchor: end;
         }
+
+        .bar-charts-container {
+            display: flex;
+        }
+
+        .outgoing-trash-title,
+        .incoming-trash-title {
+            visibility: hidden;
+            margin: 0;
+            font-weight: 300;
+        }
         </style>
     </head>
     <body>
@@ -246,6 +257,14 @@
             </select>
         </section>
         <div class="chart"></div>
+        <div class="bar-charts-container">
+            <div class="outgoing-trash">
+                <h3 class="outgoing-trash-title">Outgoing</h3>
+            </div>
+            <div class="incoming-trash">
+                <h3 class="incoming-trash-title">Incoming</h3>
+            </div>
+        </div>
         <script src="js/script.min.js"> </script>
         <section>
             <h2>How to read this chart</h2>
